@@ -1,21 +1,16 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
 using Android.App;
 using Android.Content;
 using Android.OS;
 using Android.Runtime;
-using Android.Views;
+using Android.Speech;
 using Android.Widget;
+using Java.Util;
+using PicSayAndPlay.Helpers;
 using PicSayAndPlay.Services;
+using Plugin.TextToSpeech;
+using System;
 using System.IO;
 using Uri = Android.Net.Uri;
-using PicSayAndPlay.Helpers;
-using Plugin.TextToSpeech;
-using Android.Speech;
-using Java.Util;
 
 namespace PicSayAndPlay.Droid
 {
@@ -62,12 +57,12 @@ namespace PicSayAndPlay.Droid
             Intent i = new Intent(RecognizerIntent.ActionRecognizeSpeech);
             i.PutExtra(RecognizerIntent.ExtraLanguageModel, RecognizerIntent.LanguageModelFreeForm);
             i.PutExtra(RecognizerIntent.ExtraLanguage, Locale.Default);
-            i.PutExtra(RecognizerIntent.ExtraPrompt, "Pronunce!");
+            i.PutExtra(RecognizerIntent.ExtraPrompt, "Say it!");
             try
             {
                 StartActivityForResult(i, 100);
             }
-            catch(ActivityNotFoundException)
+            catch (ActivityNotFoundException)
             {
                 Toast.MakeText(this.ApplicationContext, "Algo malo pasó", ToastLength.Long).Show();
             }
@@ -89,15 +84,15 @@ namespace PicSayAndPlay.Droid
                             if (word.ToLower().Equals(result[0].ToLower()))
                             {
                                 Toast.MakeText(
-                                    this.ApplicationContext, 
-                                    "Correcto!", 
-                                    ToastLength.Long).Show();  
+                                    this.ApplicationContext,
+                                    "Correcto!",
+                                    ToastLength.Long).Show();
                             }
                             else
                             {
                                 Toast.MakeText(
-                                    this.ApplicationContext, 
-                                    $"Incorrecto :(. Pronunciaste {result[0]}", 
+                                    this.ApplicationContext,
+                                    $"Incorrecto :(. Pronunciaste {result[0]}",
                                     ToastLength.Long).Show();
                             }
 

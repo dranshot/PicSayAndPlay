@@ -1,16 +1,13 @@
-﻿using System;
-using Android.App;
+﻿using Android.App;
 using Android.Content;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
 using Android.OS;
-using PicSayAndPlay;
+using Android.Widget;
 using Plugin.Media;
+using System;
 
 namespace PicSayAndPlay.Droid
 {
-    [Activity(Label = "PicSayAndPlay.Droid", MainLauncher = true, Icon = "@drawable/icon")]
+    [Activity(Label = "Pic, Say and Play", MainLauncher = true, Icon = "@drawable/icon")]
     public class MainActivity : Activity
     {
         private Button takePhotoBtn;
@@ -28,7 +25,7 @@ namespace PicSayAndPlay.Droid
 
         private async void TakePhotoBtn_Click(object sender, EventArgs e)
         {
-            if(!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
+            if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
             {
                 /* TODO: Change to snackbar*/
                 Toast.MakeText(this.ApplicationContext, "La cámara no está disponible :(", ToastLength.Long).Show();
@@ -52,4 +49,3 @@ namespace PicSayAndPlay.Droid
         }
     }
 }
-

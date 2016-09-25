@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace PicSayAndPlay.Models
+﻿namespace PicSayAndPlay.Models
 {
     public enum Country
     {

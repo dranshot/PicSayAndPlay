@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace PicSayAndPlay.Models
 {
@@ -12,5 +8,4 @@ namespace PicSayAndPlay.Models
         public List<Translation> AnsweredWords { get; set; } = new List<Translation>();
         public int PointsEarned { get; set; }
     }
-
 }
