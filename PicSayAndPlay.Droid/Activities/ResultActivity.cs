@@ -17,6 +17,7 @@ namespace PicSayAndPlay.Droid
     [Activity(Label = "ResultActivity")]
     public class ResultActivity : Activity
     {
+        private ProgressDialog dialog;
         private ImageView imageView;
         private TextView resultText;
         private ImageButton pronounceBtn;
@@ -41,8 +42,10 @@ namespace PicSayAndPlay.Droid
             imageView.SetImageURI(imageUri);
 
             //  Resize image and send it
+            dialog = ProgressDialog.Show(this, "Un momento", "Analizando imagen...");
             byte[] resizedImageArray = ResizeImage();
             var result = await ComputerVisionService.Client.DescribeAsync(new MemoryStream(resizedImageArray));
+            dialog.Dismiss();
 
             word = result?.Description.Tags[0];
             resultText.Text = word;
