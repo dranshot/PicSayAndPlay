@@ -50,8 +50,17 @@ namespace PicSayAndPlay.Droid
             word = result?.Description.Tags[0];
             resultText.Text = word;
 
-            pronounceBtn.Click += (s, e) => { CrossTextToSpeech.Current.Speak(word); };
+            pronounceBtn.Click += PronounceBtn_Click;
             practiceBtn.Click += PracticeBtn_Click;
+        }
+
+        private async void PronounceBtn_Click(object sender, EventArgs e)
+        {
+            CrossTextToSpeech.Current.Speak(word);
+
+            /* TODO: Move this */
+            var translatedWord = await TranslationService.Translate(word);
+            Toast.MakeText(this.ApplicationContext, translatedWord, ToastLength.Long).Show();
         }
 
         private void PracticeBtn_Click(object sender, EventArgs e)
@@ -67,7 +76,7 @@ namespace PicSayAndPlay.Droid
             }
             catch (ActivityNotFoundException)
             {
-                Toast.MakeText(this.ApplicationContext, "Algo malo pasó", ToastLength.Long).Show();
+                Toast.MakeText(this.ApplicationContext, "Algo malo pasó :(", ToastLength.Long).Show();
             }
         }
 
