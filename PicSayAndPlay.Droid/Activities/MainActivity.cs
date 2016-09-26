@@ -35,9 +35,7 @@ namespace PicSayAndPlay.Droid
             var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions()
             {
                 DefaultCamera = Plugin.Media.Abstractions.CameraDevice.Rear,
-                Directory = "PicSay",
-                Name = "image.jpg",
-                SaveToAlbum = true
+                SaveToAlbum = false
             });
 
             if (file == null)
