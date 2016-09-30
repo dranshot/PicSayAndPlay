@@ -3,13 +3,17 @@ using Android.Content;
 using Android.OS;
 using Android.Runtime;
 using Android.Speech;
+using Android.Support.V7.Widget;
+using Android.Util;
 using Android.Widget;
-using Java.Util;
+using Microsoft.ProjectOxford.Vision.Contract;
 using PicSayAndPlay.Helpers;
+using PicSayAndPlay.Models;
 using PicSayAndPlay.Services;
-using Plugin.TextToSpeech;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Uri = Android.Net.Uri;
 
 namespace PicSayAndPlay.Droid
@@ -19,11 +23,10 @@ namespace PicSayAndPlay.Droid
     {
         private ProgressDialog dialog;
         private ImageView imageView;
-        private TextView resultText;
-        private ImageButton pronounceBtn;
-        private ImageButton practiceBtn;
         private Uri imageUri;
-        private string word;
+        private RecyclerView recyclerView;
+        private List<Translation> list;
+        private AnalysisResult result;
 
         protected async override void OnCreate(Bundle savedInstanceState)
         {
@@ -35,49 +38,50 @@ namespace PicSayAndPlay.Droid
             imageUri = Uri.Parse(path);
 
             imageView = FindViewById<ImageView>(Resource.Id.AnalyzedImage);
-            resultText = FindViewById<TextView>(Resource.Id.ResultTxt);
-            pronounceBtn = FindViewById<ImageButton>(Resource.Id.pronounceBtn);
-            practiceBtn = FindViewById<ImageButton>(Resource.Id.speakBtn);
-
+            recyclerView = FindViewById<RecyclerView>(Resource.Id.recyclerView);
             imageView.SetImageURI(imageUri);
 
             //  Resize image and send it
             dialog = ProgressDialog.Show(this, "Un momento", "Analizando imagen...");
+
             byte[] resizedImageArray = ResizeImage();
-            var result = await ComputerVisionService.Client.DescribeAsync(new MemoryStream(resizedImageArray));
-            dialog.Dismiss();
-
-            word = result?.Description.Tags[0];
-            resultText.Text = word;
-
-            pronounceBtn.Click += PronounceBtn_Click;
-            practiceBtn.Click += PracticeBtn_Click;
-        }
-
-        private async void PronounceBtn_Click(object sender, EventArgs e)
-        {
-            CrossTextToSpeech.Current.Speak(word);
-
-            /* TODO: Move this */
-            var translatedWord = await TranslationService.Translate(word);
-            Toast.MakeText(this.ApplicationContext, translatedWord, ToastLength.Long).Show();
-        }
-
-        private void PracticeBtn_Click(object sender, EventArgs e)
-        {
-            //  Get speech recognizer pop-up
-            Intent i = new Intent(RecognizerIntent.ActionRecognizeSpeech);
-            i.PutExtra(RecognizerIntent.ExtraLanguageModel, RecognizerIntent.LanguageModelFreeForm);
-            i.PutExtra(RecognizerIntent.ExtraLanguage, Locale.Default);
-            i.PutExtra(RecognizerIntent.ExtraPrompt, "Say it!");
             try
             {
-                StartActivityForResult(i, 100);
+                result = await ComputerVisionService.Client.DescribeAsync(new MemoryStream(resizedImageArray));
             }
-            catch (ActivityNotFoundException)
+            catch (Exception e)
             {
-                Toast.MakeText(this.ApplicationContext, "Algo malo pasó :(", ToastLength.Long).Show();
+                Log.WriteLine(LogPriority.Error, "ComputerVision", "Error trying to describe image" + e.Message);
             }
+            var words = result.Description.Tags.ToList();
+
+            //  Translate list
+            var translations = new List<string>();
+            foreach (var word in words)
+            {
+                try
+                {
+                    var trans = await TranslationService.Translate(word);
+                    translations.Add(trans);
+                }
+                catch (Exception e)
+                {
+                    Log.WriteLine(LogPriority.Error, "Translation", "Error trying to translate" + e.Message);
+                }
+            }
+
+            dialog.Dismiss();
+
+            //  Translate list of words
+            list = new List<Translation>();
+            for (int i = 0; i < words.Count; i++)
+            {
+                list.Add(new Translation(words[i], translations[i], "", DateTime.Now));
+            }
+
+            //  Set results
+            recyclerView.SetAdapter(new TranslationAdapter(list));
+            recyclerView.SetLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.Vertical, false));
         }
 
         protected override void OnActivityResult(int requestCode, [GeneratedEnum] Result resultCode, Intent data)
@@ -91,9 +95,10 @@ namespace PicSayAndPlay.Droid
                         if (resultCode == Result.Ok && data != null)
                         {
                             var result = data.GetStringArrayListExtra(RecognizerIntent.ExtraResults);
+                            var position = ((TranslationAdapter)recyclerView.GetAdapter()).SelectedItemPosition;
 
                             /* TODO: Delegate this to TranslationManager */
-                            if (word.ToLower().Equals(result[0].ToLower()))
+                            if (list[position].OriginalWord.ToLower().Equals(result[0].ToLower()))
                             {
                                 Toast.MakeText(
                                     this.ApplicationContext,

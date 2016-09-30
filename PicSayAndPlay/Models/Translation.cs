@@ -8,6 +8,7 @@ namespace PicSayAndPlay.Models
         public string TranslatedWord { get; }
         public string ImageSource { get; }
         public DateTime QueryDate { get; set; }
+        public bool IsWellPronounced { get; set; }
 
         public Translation(string OriginalWord, string TranslatedWord, string ImageSource, DateTime QueryDate)
         {
