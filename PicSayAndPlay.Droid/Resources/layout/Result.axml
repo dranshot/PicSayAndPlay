@@ -8,27 +8,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/AnalyzedImage" />
-    <TextView
-        android:text="Text"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/ResultTxt"
-        android:gravity="center_horizontal" />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="60dp"
-        android:gravity="center"
-        android:orientation="horizontal">
-        <ImageButton
-            android:src="@android:drawable/ic_media_play"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/pronounceBtn" />
-        <ImageButton
-            android:src="@android:drawable/ic_btn_speak_now"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/speakBtn"/>
-    </LinearLayout>
+        android:layout_height="match_parent" />
 </LinearLayout>

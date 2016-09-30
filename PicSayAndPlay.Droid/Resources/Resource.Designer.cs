@@ -96,23 +96,35 @@ namespace PicSayAndPlay.Droid
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f050002
-			public const int AnalyzedImage = 2131034114;
+			// aapt resource value: 0x7f050008
+			public const int AnalyzedImage = 2131034120;
+			
+			// aapt resource value: 0x7f050007
+			public const int TakePic = 2131034119;
 			
 			// aapt resource value: 0x7f050003
-			public const int ResultTxt = 2131034115;
-			
-			// aapt resource value: 0x7f050001
-			public const int TakePic = 2131034113;
+			public const int arrowIcon = 2131034115;
 			
 			// aapt resource value: 0x7f050000
 			public const int item_touch_helper_previous_elevation = 2131034112;
 			
-			// aapt resource value: 0x7f050004
-			public const int pronounceBtn = 2131034116;
+			// aapt resource value: 0x7f050001
+			public const int linearLayout1 = 2131034113;
+			
+			// aapt resource value: 0x7f050002
+			public const int originalWordTvw = 2131034114;
+			
+			// aapt resource value: 0x7f050006
+			public const int recordBtn = 2131034118;
+			
+			// aapt resource value: 0x7f050009
+			public const int recyclerView = 2131034121;
 			
 			// aapt resource value: 0x7f050005
 			public const int speakBtn = 2131034117;
+			
+			// aapt resource value: 0x7f050004
+			public const int translatedWordTvw = 2131034116;
 			
 			static Id()
 			{
@@ -128,10 +140,13 @@ namespace PicSayAndPlay.Droid
 		{
 			
 			// aapt resource value: 0x7f030000
-			public const int Main = 2130903040;
+			public const int AdapterTranslatedWord = 2130903040;
 			
 			// aapt resource value: 0x7f030001
-			public const int Result = 2130903041;
+			public const int Main = 2130903041;
+			
+			// aapt resource value: 0x7f030002
+			public const int Result = 2130903042;
 			
 			static Layout()
 			{
