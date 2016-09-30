@@ -243,3 +243,5 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
+PicSayAndPlay.Droid/Resources/Resource.Designer.cs
+PicSayAndPlay.Droid/Resources/Resource.Designer.cs
