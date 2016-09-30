@@ -1,14 +1,16 @@
 ﻿using Android.App;
 using Android.Content;
 using Android.OS;
+using Android.Support.V7.App;
 using Android.Widget;
 using Plugin.Media;
 using System;
 
 namespace PicSayAndPlay.Droid
 {
-    [Activity(Label = "Pic, Say and Play", MainLauncher = true, Icon = "@drawable/icon")]
-    public class MainActivity : Activity
+    [Activity(Label = "Pic, Say and Play", MainLauncher = true, 
+        Icon = "@drawable/icon", Theme = "@style/Base.Theme.Design")]
+    public class MainActivity : AppCompatActivity
     {
         private Button takePhotoBtn;
 
@@ -16,7 +18,6 @@ namespace PicSayAndPlay.Droid
         {
             base.OnCreate(bundle);
             SetContentView(Resource.Layout.Main);
-
             takePhotoBtn = FindViewById<Button>(Resource.Id.TakePic);
 
             //  EventHandlers

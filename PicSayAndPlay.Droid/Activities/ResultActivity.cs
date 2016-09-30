@@ -1,8 +1,10 @@
 using Android.App;
 using Android.Content;
+using Android.Content.PM;
 using Android.OS;
 using Android.Runtime;
 using Android.Speech;
+using Android.Support.V7.App;
 using Android.Support.V7.Widget;
 using Android.Util;
 using Android.Widget;
@@ -18,8 +20,9 @@ using Uri = Android.Net.Uri;
 
 namespace PicSayAndPlay.Droid
 {
-    [Activity(Label = "ResultActivity")]
-    public class ResultActivity : Activity
+    [Activity(Label = "ResultActivity", Theme = "@style/Base.Theme.Design",
+        ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.ScreenSize | ConfigChanges.KeyboardHidden)]
+    public class ResultActivity : AppCompatActivity
     {
         private ProgressDialog dialog;
         private ImageView imageView;
@@ -44,7 +47,7 @@ namespace PicSayAndPlay.Droid
             //  Resize image and send it
             dialog = ProgressDialog.Show(this, "Un momento", "Analizando imagen...");
 
-            byte[] resizedImageArray = ResizeImage();
+            byte[] resizedImageArray = ResizeImage(imageUri);
             try
             {
                 result = await ComputerVisionService.Client.DescribeAsync(new MemoryStream(resizedImageArray));
@@ -55,6 +58,7 @@ namespace PicSayAndPlay.Droid
             }
             var words = result.Description.Tags.ToList();
 
+            /* TODO: Delegate to another class */
             //  Translate list
             var translations = new List<string>();
             foreach (var word in words)
@@ -72,7 +76,7 @@ namespace PicSayAndPlay.Droid
 
             dialog.Dismiss();
 
-            //  Translate list of words
+            /* TODO: Delegate to another class */
             list = new List<Translation>();
             for (int i = 0; i < words.Count; i++)
             {
@@ -120,7 +124,7 @@ namespace PicSayAndPlay.Droid
             }
         }
 
-        private byte[] ResizeImage()
+        private byte[] ResizeImage(Uri imageUri)
         {
             byte[] imageData;
             using (MemoryStream ms = new MemoryStream())

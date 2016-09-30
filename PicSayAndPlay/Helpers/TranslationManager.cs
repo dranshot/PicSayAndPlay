@@ -21,7 +21,6 @@ namespace PicSayAndPlay.Helpers
 
             var ImageUrl = GenerateImageUrl(Image);
             await SaveTranslation(OriginalWord, TranslatedWord, ImageUrl);
-            AsignPoints();
             return true;
         }
 
@@ -45,11 +44,6 @@ namespace PicSayAndPlay.Helpers
             var Translation = new Translation(OriginalWord, TranslatedWord, ImageUrl, DateTime.Now);
             //  User.Classification.AnsweredWords?.Add(Translation);
             //  await UsersService.SaveTranslation(User.FirstName, Translation);
-        }
-
-        private void AsignPoints()
-        {
-            User.Classification.PointsEarned += 20;
         }
 
         #endregion HelperMethods
