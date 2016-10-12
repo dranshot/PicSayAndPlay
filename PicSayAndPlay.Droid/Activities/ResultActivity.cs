@@ -12,10 +12,12 @@ using Microsoft.ProjectOxford.Vision.Contract;
 using PicSayAndPlay.Helpers;
 using PicSayAndPlay.Models;
 using PicSayAndPlay.Services;
+using Square.Picasso;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using Uri = Android.Net.Uri;
 
 namespace PicSayAndPlay.Droid
@@ -28,7 +30,7 @@ namespace PicSayAndPlay.Droid
         private ImageView imageView;
         private Uri imageUri;
         private RecyclerView recyclerView;
-        private List<Translation> list;
+        private List<Translation> translations;
         private AnalysisResult result;
 
         protected async override void OnCreate(Bundle savedInstanceState)
@@ -37,55 +39,34 @@ namespace PicSayAndPlay.Droid
             SetContentView(Resource.Layout.Result);
 
             //  Get picture's path from extra
-            var path = Intent.GetStringExtra("Image");
-            imageUri = Uri.Parse(path);
+            var imageUri = Uri.Parse(Intent.GetStringExtra("Image"));
 
             imageView = FindViewById<ImageView>(Resource.Id.AnalyzedImage);
             recyclerView = FindViewById<RecyclerView>(Resource.Id.recyclerView);
-            imageView.SetImageURI(imageUri);
+            Plugin.TextToSpeech.CrossTextToSpeech.Current.Init();
 
-            //  Resize image and send it
-            dialog = ProgressDialog.Show(this, "Un momento", "Analizando imagen...");
 
+            ShowDialog();
+            
             byte[] resizedImageArray = ResizeImage(imageUri);
-            try
-            {
-                result = await ComputerVisionService.Client.DescribeAsync(new MemoryStream(resizedImageArray));
-            }
-            catch (Exception e)
-            {
-                Log.WriteLine(LogPriority.Error, "ComputerVision", "Error trying to describe image" + e.Message);
-            }
-            var words = result.Description.Tags.ToList();
-
-            /* TODO: Delegate to another class */
-            //  Translate list
-            var translations = new List<string>();
-            foreach (var word in words)
-            {
-                try
-                {
-                    var trans = await TranslationService.Translate(word);
-                    translations.Add(trans);
-                }
-                catch (Exception e)
-                {
-                    Log.WriteLine(LogPriority.Error, "Translation", "Error trying to translate" + e.Message);
-                }
-            }
+            result = await ComputerVisionService.Client.DescribeAsync(new MemoryStream(resizedImageArray));
+            translations = await TranslationService.TranslateAsync(result);
 
             dialog.Dismiss();
 
-            /* TODO: Delegate to another class */
-            list = new List<Translation>();
-            for (int i = 0; i < words.Count; i++)
-            {
-                list.Add(new Translation(words[i], translations[i], "", DateTime.Now));
-            }
 
             //  Set results
-            recyclerView.SetAdapter(new TranslationAdapter(list));
+            Picasso.With(this.ApplicationContext).Load("file:" + imageUri).Into(imageView);
+            recyclerView.SetAdapter(new TranslationAdapter(translations));
             recyclerView.SetLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.Vertical, false));
+        }
+
+        private void ShowDialog()
+        {
+            dialog = new ProgressDialog(this);
+            dialog.Indeterminate = true;
+            dialog.SetMessage("Analizando imagen");
+            dialog.Show();
         }
 
         protected override void OnActivityResult(int requestCode, [GeneratedEnum] Result resultCode, Intent data)
@@ -102,7 +83,7 @@ namespace PicSayAndPlay.Droid
                             var position = ((TranslationAdapter)recyclerView.GetAdapter()).SelectedItemPosition;
 
                             /* TODO: Delegate this to TranslationManager */
-                            if (list[position].OriginalWord.ToLower().Equals(result[0].ToLower()))
+                            if (translations[position].OriginalWord.ToLower().Equals(result[0].ToLower()))
                             {
                                 Toast.MakeText(
                                     this.ApplicationContext,

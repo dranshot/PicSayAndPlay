@@ -41,7 +41,7 @@ namespace PicSayAndPlay.Helpers
 
         private async Task SaveTranslation(string OriginalWord, string TranslatedWord, string ImageUrl)
         {
-            var Translation = new Translation(OriginalWord, TranslatedWord, ImageUrl, DateTime.Now);
+            var Translation = new Translation(OriginalWord, TranslatedWord, DateTime.Now, ImageUrl);
             //  User.Classification.AnsweredWords?.Add(Translation);
             //  await UsersService.SaveTranslation(User.FirstName, Translation);
         }

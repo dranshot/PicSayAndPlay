@@ -1,7 +1,10 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.ProjectOxford.Vision.Contract;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using PicSayAndPlay.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
@@ -14,29 +17,40 @@ namespace PicSayAndPlay.Services
         private static string _dataMarketUri = "https://datamarket.accesscontrol.windows.net/v2/OAuth2-13";
         private static HttpClient _client = new HttpClient();
 
-        public static async Task<string> Translate(string text)
+        public static async Task<List<Translation>> TranslateAsync(AnalysisResult result)
         {
+            var originalWords = result.Description.Tags.ToList();
+            List<Translation> translations = new List<Translation>();
+            var divider = '*';
+
+            //  Concat list of words
+            var text = originalWords.Aggregate((i, j) => i + divider + j);
+
             string auth = await GetToken();
             _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", auth);
             var requestUri = "http://api.microsofttranslator.com/v2/Http.svc/Translate?text="
                                             + System.Net.WebUtility.UrlEncode(text)
-                                            + "&to=es";
+                                            + "&from=en&to=es";
             string strTransText = string.Empty;
             try
             {
                 var strTranslated = await _client.GetStringAsync(requestUri);
                 var xTranslation = XDocument.Parse(strTranslated);
                 strTransText = xTranslation.Root?.FirstNode.ToString();
-                if (strTransText == text)
-                    return "";
-                else
-                    return strTransText;
+
+                //  Split list of words
+                var translatedWords = strTransText.Split(divider).ToList();
+
+                //  Fill Translation object's list
+                for (int i = 0; i < originalWords.Count; i++)
+                {
+                    translations.Add(new Translation(originalWords[i], translatedWords[i], DateTime.Now));
+                }
             }
             catch (Exception)
-            {
-                //
-            }
-            return strTransText;
+            {   }
+
+            return translations;
         }
 
         private static async Task<string> GetToken()

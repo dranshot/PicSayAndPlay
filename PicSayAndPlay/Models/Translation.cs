@@ -6,11 +6,11 @@ namespace PicSayAndPlay.Models
     {
         public string OriginalWord { get; }
         public string TranslatedWord { get; }
-        public string ImageSource { get; }
-        public DateTime QueryDate { get; set; }
+        public string ImageSource { get; set; }
+        public DateTime QueryDate { get; }
         public bool IsWellPronounced { get; set; }
 
-        public Translation(string OriginalWord, string TranslatedWord, string ImageSource, DateTime QueryDate)
+        public Translation(string OriginalWord, string TranslatedWord, DateTime QueryDate, string ImageSource = "")
         {
             this.OriginalWord = OriginalWord;
             this.TranslatedWord = TranslatedWord;
