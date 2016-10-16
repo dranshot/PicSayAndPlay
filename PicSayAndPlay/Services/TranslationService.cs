@@ -19,7 +19,7 @@ namespace PicSayAndPlay.Services
 
         public static async Task<List<Translation>> TranslateAsync(AnalysisResult result)
         {
-            var originalWords = result.Description.Tags.ToList();
+            var originalWords = result.Tags.Where(p => p.Confidence > 0.5).Select(p => p.Name).ToList();
             List<Translation> translations = new List<Translation>();
             var divider = '*';
 

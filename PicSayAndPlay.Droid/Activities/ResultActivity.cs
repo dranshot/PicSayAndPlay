@@ -39,7 +39,7 @@ namespace PicSayAndPlay.Droid
             SetContentView(Resource.Layout.Result);
 
             //  Get picture's path from extra
-            var imageUri = Uri.Parse(Intent.GetStringExtra("Image"));
+            imageUri = Uri.Parse(Intent.GetStringExtra("Image"));
 
             imageView = FindViewById<ImageView>(Resource.Id.AnalyzedImage);
             recyclerView = FindViewById<RecyclerView>(Resource.Id.recyclerView);
@@ -49,7 +49,7 @@ namespace PicSayAndPlay.Droid
             ShowDialog();
             
             byte[] resizedImageArray = ResizeImage(imageUri);
-            result = await ComputerVisionService.Client.DescribeAsync(new MemoryStream(resizedImageArray));
+            result = await ComputerVisionService.Client.GetTagsAsync(new MemoryStream(resizedImageArray));
             translations = await TranslationService.TranslateAsync(result);
 
             dialog.Dismiss();
