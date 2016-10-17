@@ -8,7 +8,7 @@ using System;
 
 namespace PicSayAndPlay.Droid
 {
-    [Activity(Label = "Pic, Say and Play", MainLauncher = true, 
+    [Activity(Label = "Pic, Say and Play", MainLauncher = false, 
         Icon = "@drawable/icon", Theme = "@style/Base.Theme.Design")]
     public class MainActivity : AppCompatActivity
     {

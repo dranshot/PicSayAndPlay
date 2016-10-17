@@ -19,12 +19,12 @@ namespace PicSayAndPlay.Services
 
         public static async Task<List<Translation>> TranslateAsync(AnalysisResult result)
         {
-            var originalWords = result.Tags.Where(p => p.Confidence > 0.5).Select(p => p.Name).ToList();
+            var originalWords = result.Tags?.Where(p => p.Confidence > 0.5).Select(p => p.Name).ToList();
             List<Translation> translations = new List<Translation>();
             var divider = '*';
 
             //  Concat list of words
-            var text = originalWords.Aggregate((i, j) => i + divider + j);
+            var text = originalWords?.Aggregate((i, j) => i + divider + j);
 
             string auth = await GetToken();
             _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", auth);

@@ -43,14 +43,12 @@ namespace PicSayAndPlay.Droid
 
             imageView = FindViewById<ImageView>(Resource.Id.AnalyzedImage);
             recyclerView = FindViewById<RecyclerView>(Resource.Id.recyclerView);
-            Plugin.TextToSpeech.CrossTextToSpeech.Current.Init();
+            //  Plugin.TextToSpeech.CrossTextToSpeech.Current.Init();
 
 
             ShowDialog();
-            
-            byte[] resizedImageArray = ResizeImage(imageUri);
-            result = await ComputerVisionService.Client.GetTagsAsync(new MemoryStream(resizedImageArray));
-            translations = await TranslationService.TranslateAsync(result);
+
+            await GetWordsToShow();
 
             dialog.Dismiss();
 
@@ -59,6 +57,13 @@ namespace PicSayAndPlay.Droid
             Picasso.With(this.ApplicationContext).Load("file:" + imageUri).Into(imageView);
             recyclerView.SetAdapter(new TranslationAdapter(translations));
             recyclerView.SetLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.Vertical, false));
+        }
+
+        private async Task GetWordsToShow()
+        {
+            byte[] resizedImageArray = ResizeImage(imageUri);
+            result = await ComputerVisionService.Client.GetTagsAsync(new MemoryStream(resizedImageArray));
+            translations = await TranslationService.TranslateAsync(result);
         }
 
         private void ShowDialog()
