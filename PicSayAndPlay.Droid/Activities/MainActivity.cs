@@ -13,35 +13,65 @@ namespace PicSayAndPlay.Droid
     public class MainActivity : AppCompatActivity
     {
         private Button takePhotoBtn;
+        private Button pickPhotoBtn;
 
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
             SetContentView(Resource.Layout.Main);
-            takePhotoBtn = FindViewById<Button>(Resource.Id.TakePic);
+
+            takePhotoBtn = FindViewById<Button>(Resource.Id.takePic);
+            pickPhotoBtn = FindViewById<Button>(Resource.Id.pickPic);
 
             //  EventHandlers
             takePhotoBtn.Click += TakePhotoBtn_Click;
+            pickPhotoBtn.Click += TakePhotoBtn_Click;
         }
 
         private async void TakePhotoBtn_Click(object sender, EventArgs e)
         {
-            if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
-            {
-                /* TODO: Change to snackbar*/
-                Toast.MakeText(this.ApplicationContext, "La cámara no está disponible :(", ToastLength.Long).Show();
-                return;
-            }
+            Plugin.Media.Abstractions.MediaFile file = null;
+            await CrossMedia.Current.Initialize();
 
-            var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions()
+            if (sender.Equals(takePhotoBtn))
             {
-                DefaultCamera = Plugin.Media.Abstractions.CameraDevice.Rear,
-                SaveToAlbum = false
-            });
+                /*  Take photo clicked */
+
+                if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
+                {
+                    /* TODO: Change to snackbar*/
+                    Toast.MakeText(this.ApplicationContext, "La cámara no está disponible :(", ToastLength.Long).Show();
+                    return;
+                }
+
+                file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions()
+                {
+                    DefaultCamera = Plugin.Media.Abstractions.CameraDevice.Rear,
+                    SaveToAlbum = false
+                });
+            }
+            else
+            {
+                /* Pick foto clicked */
+
+                if (!CrossMedia.Current.IsPickPhotoSupported)
+                {
+                    /* TODO: Change to snackbar*/
+                    Toast.MakeText(this.ApplicationContext, "No puedo ir a la galería :(", ToastLength.Long).Show();
+                    return;
+                }
+
+                file = await CrossMedia.Current.PickPhotoAsync();
+            }
 
             if (file == null)
                 return;
 
+            NavigateToResult(file);
+        }
+
+        private void NavigateToResult(Plugin.Media.Abstractions.MediaFile file)
+        {
             Intent i = new Intent(this, typeof(ResultActivity));
             i.PutExtra("Image", file.Path);
             StartActivity(i);

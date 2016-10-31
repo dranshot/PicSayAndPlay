@@ -5,9 +5,15 @@
     android:layout_height="match_parent"
     android:gravity="center">
     <Button
-        android:id="@+id/TakePic"
+        android:id="@+id/takePic"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Toma una foto"
+        android:layout_gravity="center" />
+    <Button
+        android:id="@+id/pickPic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Escoge una foto"
         android:layout_gravity="center" />
 </LinearLayout>

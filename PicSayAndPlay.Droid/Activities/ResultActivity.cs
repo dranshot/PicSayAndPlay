@@ -1,12 +1,12 @@
 using Android.App;
 using Android.Content;
 using Android.Content.PM;
+using Android.Graphics;
 using Android.OS;
 using Android.Runtime;
 using Android.Speech;
 using Android.Support.V7.App;
 using Android.Support.V7.Widget;
-using Android.Util;
 using Android.Widget;
 using Microsoft.ProjectOxford.Vision.Contract;
 using PicSayAndPlay.Helpers;
@@ -32,6 +32,7 @@ namespace PicSayAndPlay.Droid
         private RecyclerView recyclerView;
         private List<Translation> translations;
         private AnalysisResult result;
+        private Bitmap bitmap;
 
         protected async override void OnCreate(Bundle savedInstanceState)
         {
@@ -43,7 +44,6 @@ namespace PicSayAndPlay.Droid
 
             imageView = FindViewById<ImageView>(Resource.Id.AnalyzedImage);
             recyclerView = FindViewById<RecyclerView>(Resource.Id.recyclerView);
-            //  Plugin.TextToSpeech.CrossTextToSpeech.Current.Init();
 
 
             ShowDialog();
@@ -54,7 +54,8 @@ namespace PicSayAndPlay.Droid
 
 
             //  Set results
-            Picasso.With(this.ApplicationContext).Load("file:" + imageUri).Into(imageView);
+            //  Picasso.With(this.ApplicationContext).Load("file:" + imageUri).Into(imageView);
+            imageView.SetImageBitmap(bitmap);
             recyclerView.SetAdapter(new TranslationAdapter(translations));
             recyclerView.SetLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.Vertical, false));
         }
@@ -69,7 +70,7 @@ namespace PicSayAndPlay.Droid
         private void ShowDialog()
         {
             dialog = new ProgressDialog(this);
-            dialog.Indeterminate = true;
+            dialog.SetCancelable(false);
             dialog.SetMessage("Analizando imagen");
             dialog.Show();
         }
@@ -112,14 +113,14 @@ namespace PicSayAndPlay.Droid
 
         private byte[] ResizeImage(Uri imageUri)
         {
-            byte[] imageData;
-            using (MemoryStream ms = new MemoryStream())
+            bitmap = Helpers.BitmapHelper.GetAndRotateBitmap(imageUri.Path);
+            bitmap = Bitmap.CreateScaledBitmap(bitmap, 2000, (int)2000 * bitmap.Height / bitmap.Width, false);
+            using (MemoryStream stream = new MemoryStream())
             {
-                new FileStream(imageUri.Path, FileMode.Open).CopyTo(ms);
-                imageData = ms.ToArray();
+                bitmap.Compress(Bitmap.CompressFormat.Jpeg, 90, stream);
+                stream.Seek(0, SeekOrigin.Begin);
+                return stream.ToArray();
             }
-            byte[] resizedImage = Resizer.ResizeImageAndroid(imageData);
-            return resizedImage;
         }
     }
 }
