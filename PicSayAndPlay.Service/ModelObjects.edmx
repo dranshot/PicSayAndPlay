@@ -1,0 +1,380 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="picsayplaydbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Country">
+          <Key>
+            <PropertyRef Name="CountryId" />
+          </Key>
+          <Property Name="CountryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Level">
+          <Key>
+            <PropertyRef Name="LevelId" />
+          </Key>
+          <Property Name="LevelId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Value" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="PointsRequired" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Puntuation">
+          <Key>
+            <PropertyRef Name="PuntuationId" />
+          </Key>
+          <Property Name="PuntuationId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NumberOfChars" Type="tinyint" Nullable="false" />
+          <Property Name="Points" Type="tinyint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Query">
+          <Key>
+            <PropertyRef Name="QueryId" />
+          </Key>
+          <Property Name="QueryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="Date" Type="datetime" />
+          <Property Name="OriginalWord" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="TranslatedWord" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="ImageUrl" Type="nvarchar(max)" />
+          <Property Name="PuntuationId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserInfo">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="NickName" Type="nvarchar" MaxLength="15" />
+          <Property Name="Email" Type="varchar" MaxLength="320" />
+          <Property Name="PasswordHash" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Birthday" Type="datetime" />
+          <Property Name="RegistrationDate" Type="datetime" Nullable="false" />
+          <Property Name="CountryID" Type="int" />
+          <Property Name="LevelId" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Query_Puntuation">
+          <End Role="Puntuation" Type="Self.Puntuation" Multiplicity="1" />
+          <End Role="Query" Type="Self.Query" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Puntuation">
+              <PropertyRef Name="PuntuationId" />
+            </Principal>
+            <Dependent Role="Query">
+              <PropertyRef Name="PuntuationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Query_User">
+          <End Role="UserInfo" Type="Self.UserInfo" Multiplicity="1" />
+          <End Role="Query" Type="Self.Query" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserInfo">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Query">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Country">
+          <End Role="Country" Type="Self.Country" Multiplicity="0..1" />
+          <End Role="UserInfo" Type="Self.UserInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Country">
+              <PropertyRef Name="CountryId" />
+            </Principal>
+            <Dependent Role="UserInfo">
+              <PropertyRef Name="CountryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Level">
+          <End Role="Level" Type="Self.Level" Multiplicity="1" />
+          <End Role="UserInfo" Type="Self.UserInfo" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Level">
+              <PropertyRef Name="LevelId" />
+            </Principal>
+            <Dependent Role="UserInfo">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="SP_Login" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="username" Type="nvarchar" Mode="In" />
+          <Parameter Name="passwd" Type="nvarchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="picsayplaydbModelStoreContainer">
+          <EntitySet Name="Country" EntityType="Self.Country" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Level" EntityType="Self.Level" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Puntuation" EntityType="Self.Puntuation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Query" EntityType="Self.Query" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserInfo" EntityType="Self.UserInfo" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Query_Puntuation" Association="Self.FK_Query_Puntuation">
+            <End Role="Puntuation" EntitySet="Puntuation" />
+            <End Role="Query" EntitySet="Query" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Query_User" Association="Self.FK_Query_User">
+            <End Role="UserInfo" EntitySet="UserInfo" />
+            <End Role="Query" EntitySet="Query" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Country" Association="Self.FK_User_Country">
+            <End Role="Country" EntitySet="Country" />
+            <End Role="UserInfo" EntitySet="UserInfo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Level" Association="Self.FK_User_Level">
+            <End Role="Level" EntitySet="Level" />
+            <End Role="UserInfo" EntitySet="UserInfo" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="picsayplaydbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Country">
+          <Key>
+            <PropertyRef Name="CountryId" />
+          </Key>
+          <Property Name="CountryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="UserInfoes" Relationship="picsayplaydbModel.FK_User_Country1" FromRole="Country" ToRole="UserInfo" />
+        </EntityType>
+        <EntityType Name="Level">
+          <Key>
+            <PropertyRef Name="LevelId" />
+          </Key>
+          <Property Name="LevelId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Value" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PointsRequired" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="UserInfo" Relationship="picsayplaydbModel.FK_User_Level1" FromRole="Level" ToRole="UserInfo" />
+        </EntityType>
+        <EntityType Name="Puntuation">
+          <Key>
+            <PropertyRef Name="PuntuationId" />
+          </Key>
+          <Property Name="PuntuationId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NumberOfChars" Type="Byte" Nullable="false" />
+          <Property Name="Points" Type="Byte" Nullable="false" />
+          <NavigationProperty Name="Queries" Relationship="Self.FK_Query_Puntuation" FromRole="Puntuation" ToRole="Query" />
+        </EntityType>
+        <EntityType Name="Query">
+          <Key>
+            <PropertyRef Name="QueryId" />
+          </Key>
+          <Property Name="QueryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Precision="3" />
+          <Property Name="OriginalWord" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TranslatedWord" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ImageUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PuntuationId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Puntuation" Relationship="Self.FK_Query_Puntuation" FromRole="Query" ToRole="Puntuation" />
+          <NavigationProperty Name="UserInfo" Relationship="picsayplaydbModel.FK_Query_User1" FromRole="Query" ToRole="UserInfo" />
+        </EntityType>
+        <Association Name="FK_Query_Puntuation">
+          <End Role="Puntuation" Type="Self.Puntuation" Multiplicity="1" />
+          <End Role="Query" Type="Self.Query" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Puntuation">
+              <PropertyRef Name="PuntuationId" />
+            </Principal>
+            <Dependent Role="Query">
+              <PropertyRef Name="PuntuationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="picsayplaydbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Countries" EntityType="Self.Country" />
+          <EntitySet Name="Levels" EntityType="Self.Level" />
+          <EntitySet Name="Puntuations" EntityType="Self.Puntuation" />
+          <EntitySet Name="Queries" EntityType="Self.Query" />
+          <AssociationSet Name="FK_Query_Puntuation" Association="Self.FK_Query_Puntuation">
+            <End Role="Puntuation" EntitySet="Puntuations" />
+            <End Role="Query" EntitySet="Queries" />
+          </AssociationSet>
+          <EntitySet Name="UserInfoes" EntityType="picsayplaydbModel.UserInfo" />
+          <AssociationSet Name="FK_User_Country1" Association="picsayplaydbModel.FK_User_Country1">
+            <End Role="Country" EntitySet="Countries" />
+            <End Role="UserInfo" EntitySet="UserInfoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Level1" Association="picsayplaydbModel.FK_User_Level1">
+            <End Role="Level" EntitySet="Levels" />
+            <End Role="UserInfo" EntitySet="UserInfoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Query_User1" Association="picsayplaydbModel.FK_Query_User1">
+            <End Role="UserInfo" EntitySet="UserInfoes" />
+            <End Role="Query" EntitySet="Queries" />
+          </AssociationSet>
+          <FunctionImport Name="SP_Login" ReturnType="Collection(picsayplaydbModel.SP_Login_Result)">
+            <Parameter Name="username" Mode="In" Type="String" />
+            <Parameter Name="passwd" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <EntityType Name="UserInfo">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="NickName" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="320" FixedLength="false" Unicode="false" />
+          <Property Name="PasswordHash" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Birthday" Type="DateTime" Precision="3" />
+          <Property Name="RegistrationDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CountryID" Type="Int32" />
+          <Property Name="LevelId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Country" Relationship="picsayplaydbModel.FK_User_Country1" FromRole="UserInfo" ToRole="Country" />
+          <NavigationProperty Name="Level" Relationship="picsayplaydbModel.FK_User_Level1" FromRole="UserInfo" ToRole="Level" />
+          <NavigationProperty Name="Queries" Relationship="picsayplaydbModel.FK_Query_User1" FromRole="UserInfo" ToRole="Query" />
+        </EntityType>
+        <Association Name="FK_User_Country1">
+          <End Type="picsayplaydbModel.Country" Role="Country" Multiplicity="0..1" />
+          <End Type="picsayplaydbModel.UserInfo" Role="UserInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Country">
+              <PropertyRef Name="CountryId" />
+            </Principal>
+            <Dependent Role="UserInfo">
+              <PropertyRef Name="CountryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Level1">
+          <End Type="picsayplaydbModel.Level" Role="Level" Multiplicity="1" />
+          <End Type="picsayplaydbModel.UserInfo" Role="UserInfo" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Level">
+              <PropertyRef Name="LevelId" />
+            </Principal>
+            <Dependent Role="UserInfo">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Query_User1">
+          <End Type="picsayplaydbModel.UserInfo" Role="UserInfo" Multiplicity="1" />
+          <End Type="picsayplaydbModel.Query" Role="Query" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserInfo">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Query">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="SP_Login_Result">
+          <Property Type="String" Name="FirstName" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="LastName" Nullable="false" MaxLength="30" />
+          <Property Type="String" Name="NickName" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="Email" Nullable="true" MaxLength="320" />
+          <Property Type="DateTime" Name="Birthday" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="RegistrationDate" Nullable="false" Precision="23" />
+          <Property Type="String" Name="Level" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="Country" Nullable="false" MaxLength="30" />
+          <Property Type="Int32" Name="UserId" Nullable="false" />
+          </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="picsayplaydbModelStoreContainer" CdmEntityContainer="picsayplaydbEntities">
+          <EntitySetMapping Name="Countries">
+            <EntityTypeMapping TypeName="picsayplaydbModel.Country">
+              <MappingFragment StoreEntitySet="Country">
+                <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Levels">
+            <EntityTypeMapping TypeName="picsayplaydbModel.Level">
+              <MappingFragment StoreEntitySet="Level">
+                <ScalarProperty Name="LevelId" ColumnName="LevelId" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="PointsRequired" ColumnName="PointsRequired" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Puntuations">
+            <EntityTypeMapping TypeName="picsayplaydbModel.Puntuation">
+              <MappingFragment StoreEntitySet="Puntuation">
+                <ScalarProperty Name="PuntuationId" ColumnName="PuntuationId" />
+                <ScalarProperty Name="NumberOfChars" ColumnName="NumberOfChars" />
+                <ScalarProperty Name="Points" ColumnName="Points" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Queries">
+            <EntityTypeMapping TypeName="picsayplaydbModel.Query">
+              <MappingFragment StoreEntitySet="Query">
+                <ScalarProperty Name="QueryId" ColumnName="QueryId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="OriginalWord" ColumnName="OriginalWord" />
+                <ScalarProperty Name="TranslatedWord" ColumnName="TranslatedWord" />
+                <ScalarProperty Name="ImageUrl" ColumnName="ImageUrl" />
+                <ScalarProperty Name="PuntuationId" ColumnName="PuntuationId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserInfoes">
+            <EntityTypeMapping TypeName="picsayplaydbModel.UserInfo">
+              <MappingFragment StoreEntitySet="UserInfo">
+                <ScalarProperty Name="LevelId" ColumnName="LevelId" />
+                <ScalarProperty Name="CountryID" ColumnName="CountryID" />
+                <ScalarProperty Name="RegistrationDate" ColumnName="RegistrationDate" />
+                <ScalarProperty Name="Birthday" ColumnName="Birthday" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="NickName" ColumnName="NickName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SP_Login" FunctionName="picsayplaydbModel.Store.SP_Login">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="picsayplaydbModel.SP_Login_Result">
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="NickName" ColumnName="NickName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Birthday" ColumnName="Birthday" />
+                <ScalarProperty Name="RegistrationDate" ColumnName="RegistrationDate" />
+                <ScalarProperty Name="Level" ColumnName="Level" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

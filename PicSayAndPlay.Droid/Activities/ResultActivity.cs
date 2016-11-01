@@ -7,6 +7,7 @@ using Android.Runtime;
 using Android.Speech;
 using Android.Support.V7.App;
 using Android.Support.V7.Widget;
+using Android.Util;
 using Android.Widget;
 using Microsoft.ProjectOxford.Vision.Contract;
 using PicSayAndPlay.Helpers;
@@ -46,11 +47,21 @@ namespace PicSayAndPlay.Droid
             recyclerView = FindViewById<RecyclerView>(Resource.Id.recyclerView);
 
 
-            ShowDialog();
-
-            await GetWordsToShow();
-
-            dialog.Dismiss();
+            try
+            {
+                ShowDialog();
+                await GetWordsToShow();
+            }
+            catch(Exception e)
+            {
+                Toast.MakeText( this.ApplicationContext, "Hubo algún error :(", ToastLength.Long).Show();
+                Log.WriteLine(LogPriority.Error, e.GetType().ToString(), e.InnerException.ToString());
+                this.Finish();
+            }
+            finally
+            {
+                dialog.Dismiss();
+            }
 
 
             //  Set results
@@ -60,19 +71,19 @@ namespace PicSayAndPlay.Droid
             recyclerView.SetLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.Vertical, false));
         }
 
-        private async Task GetWordsToShow()
-        {
-            byte[] resizedImageArray = ResizeImage(imageUri);
-            result = await ComputerVisionService.Client.GetTagsAsync(new MemoryStream(resizedImageArray));
-            translations = await TranslationService.TranslateAsync(result);
-        }
-
         private void ShowDialog()
         {
             dialog = new ProgressDialog(this);
             dialog.SetCancelable(false);
             dialog.SetMessage("Analizando imagen");
             dialog.Show();
+        }
+
+        private async Task GetWordsToShow()
+        {
+            byte[] resizedImageArray = ResizeImage(imageUri);
+            result = await ComputerVisionService.Client.GetTagsAsync(new MemoryStream(resizedImageArray));
+            translations = await TranslationService.TranslateAsync(result);
         }
 
         protected override void OnActivityResult(int requestCode, [GeneratedEnum] Result resultCode, Intent data)

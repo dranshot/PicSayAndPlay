@@ -24,11 +24,11 @@ namespace PicSayAndPlay.Droid
             pickPhotoBtn = FindViewById<Button>(Resource.Id.pickPic);
 
             //  EventHandlers
-            takePhotoBtn.Click += TakePhotoBtn_Click;
-            pickPhotoBtn.Click += TakePhotoBtn_Click;
+            takePhotoBtn.Click += GetPhotoToTranslate;
+            pickPhotoBtn.Click += GetPhotoToTranslate;
         }
 
-        private async void TakePhotoBtn_Click(object sender, EventArgs e)
+        private async void GetPhotoToTranslate(object sender, EventArgs e)
         {
             Plugin.Media.Abstractions.MediaFile file = null;
             await CrossMedia.Current.Initialize();

@@ -9,7 +9,7 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{D21DEBC7-7D27-4D7D-9F2F-B1BC6DF8B909}</ProjectGuid>
+    <ProjectGuid>{CAF045CE-961A-4E7B-8635-8CAC94CEE29F}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -25,7 +25,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
-    <ApplicationInsightsResourceId>/subscriptions/8dc687c9-65fc-4623-a7a7-49f7eeb4593a/resourcegroups/Default-ApplicationInsights-CentralUS/providers/microsoft.insights/components/PicSayAndPlay.Service</ApplicationInsightsResourceId>
+    <ApplicationInsightsResourceId>/subscriptions/bff5a6ef-e2f8-49b5-aad4-1a157a75730e/resourcegroups/Default-ApplicationInsights-CentralUS/providers/microsoft.insights/components/PicSayAndPlay.Service</ApplicationInsightsResourceId>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -81,6 +81,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -236,17 +237,52 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="Country.cs">
+      <DependentUpon>ModelObjects.tt</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Level.cs">
+      <DependentUpon>ModelObjects.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelObjects.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelObjects.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelObjects.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelObjects.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelObjects.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelObjects.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Classes.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
+    <Compile Include="Puntuation.cs">
+      <DependentUpon>ModelObjects.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Query.cs">
+      <DependentUpon>ModelObjects.tt</DependentUpon>
+    </Compile>
     <Compile Include="Results\ChallengeResult.cs" />
+    <Compile Include="SP_Login_Result.cs">
+      <DependentUpon>ModelObjects.tt</DependentUpon>
+    </Compile>
     <Compile Include="Startup.cs" />
+    <Compile Include="UserInfo.cs">
+      <DependentUpon>ModelObjects.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
@@ -255,6 +291,16 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="ModelObjects.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelObjects.edmx</DependentUpon>
+      <LastGenOutput>ModelObjects.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="ModelObjects.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelObjects.edmx</DependentUpon>
+      <LastGenOutput>ModelObjects.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\ai.0.22.19-build00125.js" />
     <Content Include="Scripts\ai.0.22.19-build00125.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -281,7 +327,13 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="Properties\PublishProfiles\PicSayAndPlayService20161012113237.pubxml" />
+    <EntityDeploy Include="ModelObjects.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ModelObjects.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="ModelObjects.edmx.diagram">
+      <DependentUpon>ModelObjects.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -293,9 +345,7 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
-    <Content Include="Web.config">
-      <SubType>Designer</SubType>
-    </Content>
+    <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -326,6 +376,9 @@
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
@@ -342,7 +395,7 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>43218</DevelopmentServerPort>
+          <DevelopmentServerPort>54383</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:43218/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>

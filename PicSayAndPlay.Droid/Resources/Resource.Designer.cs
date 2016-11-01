@@ -1830,8 +1830,8 @@ namespace PicSayAndPlay.Droid
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f06008e
-			public const int AnalyzedImage = 2131099790;
+			// aapt resource value: 0x7f060098
+			public const int AnalyzedImage = 2131099800;
 			
 			// aapt resource value: 0x7f06007d
 			public const int LoginBtn = 2131099773;
@@ -1953,6 +1953,9 @@ namespace PicSayAndPlay.Droid
 			// aapt resource value: 0x7f06004f
 			public const int customPanel = 2131099727;
 			
+			// aapt resource value: 0x7f060096
+			public const int datepickerBtn = 2131099798;
+			
 			// aapt resource value: 0x7f060058
 			public const int decor_content_parent = 2131099736;
 			
@@ -1979,6 +1982,12 @@ namespace PicSayAndPlay.Droid
 			
 			// aapt resource value: 0x7f06005c
 			public const int edit_query = 2131099740;
+			
+			// aapt resource value: 0x7f060094
+			public const int emailRegisterLay = 2131099796;
+			
+			// aapt resource value: 0x7f060095
+			public const int emailRegisterTxt = 2131099797;
 			
 			// aapt resource value: 0x7f06001c
 			public const int end = 2131099676;
@@ -2010,6 +2019,12 @@ namespace PicSayAndPlay.Droid
 			// aapt resource value: 0x7f06002e
 			public const int fill_vertical = 2131099694;
 			
+			// aapt resource value: 0x7f06008e
+			public const int firstnameRegisterLay = 2131099790;
+			
+			// aapt resource value: 0x7f06008f
+			public const int firstnameRegisterTxt = 2131099791;
+			
 			// aapt resource value: 0x7f060038
 			public const int @fixed = 2131099704;
 			
@@ -2033,6 +2048,12 @@ namespace PicSayAndPlay.Droid
 			
 			// aapt resource value: 0x7f060000
 			public const int item_touch_helper_previous_elevation = 2131099648;
+			
+			// aapt resource value: 0x7f060090
+			public const int lastnameRegisterLay = 2131099792;
+			
+			// aapt resource value: 0x7f060091
+			public const int lastnameRegisterTxt = 2131099793;
 			
 			// aapt resource value: 0x7f06002f
 			public const int left = 2131099695;
@@ -2070,6 +2091,12 @@ namespace PicSayAndPlay.Droid
 			// aapt resource value: 0x7f060021
 			public const int never = 2131099681;
 			
+			// aapt resource value: 0x7f060092
+			public const int nicknameRegisterLay = 2131099794;
+			
+			// aapt resource value: 0x7f060093
+			public const int nicknameRegisterTxt = 2131099795;
+			
 			// aapt resource value: 0x7f060010
 			public const int none = 2131099664;
 			
@@ -2103,8 +2130,8 @@ namespace PicSayAndPlay.Droid
 			// aapt resource value: 0x7f06006e
 			public const int recordBtn = 2131099758;
 			
-			// aapt resource value: 0x7f06008f
-			public const int recyclerView = 2131099791;
+			// aapt resource value: 0x7f060099
+			public const int recyclerView = 2131099801;
 			
 			// aapt resource value: 0x7f060030
 			public const int right = 2131099696;
@@ -2159,6 +2186,9 @@ namespace PicSayAndPlay.Droid
 			
 			// aapt resource value: 0x7f060068
 			public const int select_dialog_listview = 2131099752;
+			
+			// aapt resource value: 0x7f060097
+			public const int sendRegisterBtn = 2131099799;
 			
 			// aapt resource value: 0x7f060053
 			public const int shortcut = 2131099731;
@@ -2454,19 +2484,22 @@ namespace PicSayAndPlay.Droid
 			public const int notification_template_part_time = 2130903087;
 			
 			// aapt resource value: 0x7f030030
-			public const int Result = 2130903088;
+			public const int Register = 2130903088;
 			
 			// aapt resource value: 0x7f030031
-			public const int select_dialog_item_material = 2130903089;
+			public const int Result = 2130903089;
 			
 			// aapt resource value: 0x7f030032
-			public const int select_dialog_multichoice_material = 2130903090;
+			public const int select_dialog_item_material = 2130903090;
 			
 			// aapt resource value: 0x7f030033
-			public const int select_dialog_singlechoice_material = 2130903091;
+			public const int select_dialog_multichoice_material = 2130903091;
 			
 			// aapt resource value: 0x7f030034
-			public const int support_simple_spinner_dropdown_item = 2130903092;
+			public const int select_dialog_singlechoice_material = 2130903092;
+			
+			// aapt resource value: 0x7f030035
+			public const int support_simple_spinner_dropdown_item = 2130903093;
 			
 			static Layout()
 			{

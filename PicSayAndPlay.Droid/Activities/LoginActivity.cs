@@ -18,6 +18,7 @@ namespace PicSayAndPlay.Droid
     public class LoginActivity : AppCompatActivity
     {
         private Button loginBtn;
+        private Button registerBtn;
         private EditText usernameTxt;
         private EditText passwordTxt;
         private TextInputLayout userLayout;
@@ -29,17 +30,25 @@ namespace PicSayAndPlay.Droid
             SetContentView(Resource.Layout.Login);
 
             loginBtn = FindViewById<Button>(Resource.Id.LoginBtn);
+            registerBtn = FindViewById<Button>(Resource.Id.RegisterBtn);
             usernameTxt = FindViewById<EditText>(Resource.Id.UsernameTxt);
             userLayout = FindViewById<TextInputLayout>(Resource.Id.UsernameTxtLayout);
             passwordTxt = FindViewById<EditText>(Resource.Id.PasswordTxt);
             passLayout = FindViewById<TextInputLayout>(Resource.Id.PasswordTxtLayout);
 
             loginBtn.Click += LoginBtn_Click;
+            registerBtn.Click += RegisterBtn_Click;
+        }
+
+        private void RegisterBtn_Click(object sender, EventArgs e)
+        {
+            Intent i = new Intent(this, typeof(RegisterActivity));
+            StartActivity(i);
         }
 
         private void LoginBtn_Click(object sender, EventArgs e)
         {
-            if (!ValidateInputs())
+            if (!AreValidInputs())
                 return;
 
             /* TODO: Check login */
@@ -48,14 +57,14 @@ namespace PicSayAndPlay.Droid
             StartActivity(i);
         }
 
-        private bool ValidateInputs()
+        private bool AreValidInputs()
         {
-            var areValidInputs = true;
+            var valid = true;
             string userError = null;
 
             if (String.IsNullOrEmpty(usernameTxt.Text))
             {
-                areValidInputs = false;
+                valid = false;
                 userError = "Debes llenar el campo";
             }
             ShowError(userLayout, userError);
@@ -63,12 +72,12 @@ namespace PicSayAndPlay.Droid
             string passError = null;
             if (String.IsNullOrEmpty(passwordTxt.Text))
             {
-                areValidInputs = false;
+                valid = false;
                 passError = "Debes llenar el campo";
             }
             ShowError(passLayout, passError);
 
-            return areValidInputs;
+            return valid;
         }
 
         private void ShowError(TextInputLayout inputLayout, string message)
