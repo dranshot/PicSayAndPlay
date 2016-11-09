@@ -52,12 +52,6 @@
     <AndroidLinkMode>SdkOnly</AndroidLinkMode>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DevKit.Xamarin.ImageKit">
-      <HintPath>..\packages\DevKit\Droid\DevKit.Xamarin.ImageKit.dll</HintPath>
-    </Reference>
-    <Reference Include="DevKit.Xamarin.ImageKit.Abstractions">
-      <HintPath>..\packages\DevKit\Droid\DevKit.Xamarin.ImageKit.Abstractions.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.ProjectOxford.Vision, Version=1.0.370.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ProjectOxford.Vision.1.0.370\lib\portable-net45+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\Microsoft.ProjectOxford.Vision.dll</HintPath>
       <Private>True</Private>

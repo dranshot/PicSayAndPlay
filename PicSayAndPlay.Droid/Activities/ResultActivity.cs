@@ -7,7 +7,6 @@ using Android.Runtime;
 using Android.Speech;
 using Android.Support.V7.App;
 using Android.Support.V7.Widget;
-using Android.Util;
 using Android.Widget;
 using PicSayAndPlay.Models;
 using PicSayAndPlay.ViewModels;
@@ -42,21 +41,23 @@ namespace PicSayAndPlay.Droid
             recyclerView = FindViewById<RecyclerView>(Resource.Id.recyclerView);
 
             vm = new ResultViewModel();
-            bitmap = Helpers.BitmapHelper.GetAndRotateBitmap(imageUri.Path);
-
+            
             try
             {
                 ShowDialog();
+                bitmap = Helpers.BitmapHelper.GetAndRotateBitmap(imageUri.Path);
+                bitmap = Bitmap.CreateScaledBitmap(bitmap, 2000, (int)(2000 * bitmap.Height / bitmap.Width), false);
                 using (var stream = new MemoryStream())
                 {
-                    bitmap.Compress(Bitmap.CompressFormat.Jpeg, 0, stream);
-                    translations = await vm.GetWordsToShow(stream.ToArray(), bitmap.Height, bitmap.Width);
+                    bitmap.Compress(Bitmap.CompressFormat.Jpeg, 90, stream);
+                    stream.Seek(0, SeekOrigin.Begin);
+                    translations = await vm.GetWordsToShow(stream);
                 }
             }
             catch (Exception e)
             {
                 Toast.MakeText(this.ApplicationContext, "Hubo algún error :(", ToastLength.Long).Show();
-                Log.WriteLine(LogPriority.Error, e.GetType().ToString(), e.InnerException.ToString());
+                Console.WriteLine(e.Message);
                 this.Finish();
             }
             finally
