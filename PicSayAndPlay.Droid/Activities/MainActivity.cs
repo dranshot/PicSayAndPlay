@@ -3,12 +3,13 @@ using Android.Content;
 using Android.OS;
 using Android.Support.V7.App;
 using Android.Widget;
+using PicSayAndPlay.ViewModels;
 using Plugin.Media;
 using System;
 
 namespace PicSayAndPlay.Droid
 {
-    [Activity(Label = "Pic, Say and Play", MainLauncher = false, 
+    [Activity(Label = "Pic, Say and Play", MainLauncher = false,
         Icon = "@drawable/icon", Theme = "@style/Base.Theme.Design")]
     public class MainActivity : AppCompatActivity
     {
@@ -30,44 +31,27 @@ namespace PicSayAndPlay.Droid
 
         private async void GetPhotoToTranslate(object sender, EventArgs e)
         {
-            Plugin.Media.Abstractions.MediaFile file = null;
+            PictureResult result;
             await CrossMedia.Current.Initialize();
 
             if (sender.Equals(takePhotoBtn))
-            {
-                /*  Take photo clicked */
-
-                if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
-                {
-                    /* TODO: Change to snackbar*/
-                    Toast.MakeText(this.ApplicationContext, "La cámara no está disponible :(", ToastLength.Long).Show();
-                    return;
-                }
-
-                file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions()
-                {
-                    DefaultCamera = Plugin.Media.Abstractions.CameraDevice.Rear,
-                    SaveToAlbum = false
-                });
-            }
+                result = await MainViewModel.TakePhotoAsync();
             else
+                result = await MainViewModel.PickPhotoAsync();
+
+            switch (result.State)
             {
-                /* Pick foto clicked */
-
-                if (!CrossMedia.Current.IsPickPhotoSupported)
-                {
-                    /* TODO: Change to snackbar*/
-                    Toast.MakeText(this.ApplicationContext, "No puedo ir a la galería :(", ToastLength.Long).Show();
+                case PhotoResult.CameraNotAvailable:
+                    Toast.MakeText(this.ApplicationContext, "Cámara no disponible", ToastLength.Short).Show();
                     return;
-                }
-
-                file = await CrossMedia.Current.PickPhotoAsync();
+                case PhotoResult.PickNotAvailable:
+                    Toast.MakeText(this.ApplicationContext, "Galería no disponible", ToastLength.Short).Show();
+                    return;
+                case PhotoResult.Canceled:
+                    return;
             }
 
-            if (file == null)
-                return;
-
-            NavigateToResult(file);
+            NavigateToResult(result.Picture);
         }
 
         private void NavigateToResult(Plugin.Media.Abstractions.MediaFile file)

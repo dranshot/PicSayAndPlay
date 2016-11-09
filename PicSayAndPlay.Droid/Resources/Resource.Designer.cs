@@ -26,6 +26,7 @@ namespace PicSayAndPlay.Droid
 		
 		public static void UpdateIdValues()
 		{
+			global::DevKit.Xamarin.ImageKit.Droid.Resource.String.library_name = global::PicSayAndPlay.Droid.Resource.String.library_name;
 			global::Plugin.TextToSpeech.Resource.String.ApplicationName = global::PicSayAndPlay.Droid.Resource.String.ApplicationName;
 			global::Plugin.TextToSpeech.Resource.String.Hello = global::PicSayAndPlay.Droid.Resource.String.Hello;
 		}
@@ -2585,6 +2586,9 @@ namespace PicSayAndPlay.Droid
 			
 			// aapt resource value: 0x7f070016
 			public const int character_counter_pattern = 2131165206;
+			
+			// aapt resource value: 0x7f070019
+			public const int library_name = 2131165209;
 			
 			// aapt resource value: 0x7f070013
 			public const int status_bar_notification_info_overflow = 2131165203;

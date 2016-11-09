@@ -1,8 +1,8 @@
+using PicSayAndPlay.Service.Areas.HelpPage.ModelDescriptions;
+using PicSayAndPlay.Service.Areas.HelpPage.Models;
 using System;
 using System.Web.Http;
 using System.Web.Mvc;
-using PicSayAndPlay.Service.Areas.HelpPage.ModelDescriptions;
-using PicSayAndPlay.Service.Areas.HelpPage.Models;
 
 namespace PicSayAndPlay.Service.Areas.HelpPage.Controllers
 {

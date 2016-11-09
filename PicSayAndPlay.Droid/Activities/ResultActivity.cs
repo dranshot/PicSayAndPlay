@@ -9,16 +9,11 @@ using Android.Support.V7.App;
 using Android.Support.V7.Widget;
 using Android.Util;
 using Android.Widget;
-using Microsoft.ProjectOxford.Vision.Contract;
-using PicSayAndPlay.Helpers;
 using PicSayAndPlay.Models;
-using PicSayAndPlay.Services;
-using Square.Picasso;
+using PicSayAndPlay.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using Uri = Android.Net.Uri;
 
 namespace PicSayAndPlay.Droid
@@ -32,8 +27,8 @@ namespace PicSayAndPlay.Droid
         private Uri imageUri;
         private RecyclerView recyclerView;
         private List<Translation> translations;
-        private AnalysisResult result;
         private Bitmap bitmap;
+        private ResultViewModel vm;
 
         protected async override void OnCreate(Bundle savedInstanceState)
         {
@@ -46,15 +41,21 @@ namespace PicSayAndPlay.Droid
             imageView = FindViewById<ImageView>(Resource.Id.AnalyzedImage);
             recyclerView = FindViewById<RecyclerView>(Resource.Id.recyclerView);
 
+            vm = new ResultViewModel();
+            bitmap = Helpers.BitmapHelper.GetAndRotateBitmap(imageUri.Path);
 
             try
             {
                 ShowDialog();
-                await GetWordsToShow();
+                using (var stream = new MemoryStream())
+                {
+                    bitmap.Compress(Bitmap.CompressFormat.Jpeg, 0, stream);
+                    translations = await vm.GetWordsToShow(stream.ToArray(), bitmap.Height, bitmap.Width);
+                }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                Toast.MakeText( this.ApplicationContext, "Hubo algún error :(", ToastLength.Long).Show();
+                Toast.MakeText(this.ApplicationContext, "Hubo algún error :(", ToastLength.Long).Show();
                 Log.WriteLine(LogPriority.Error, e.GetType().ToString(), e.InnerException.ToString());
                 this.Finish();
             }
@@ -63,9 +64,7 @@ namespace PicSayAndPlay.Droid
                 dialog.Dismiss();
             }
 
-
             //  Set results
-            //  Picasso.With(this.ApplicationContext).Load("file:" + imageUri).Into(imageView);
             imageView.SetImageBitmap(bitmap);
             recyclerView.SetAdapter(new TranslationAdapter(translations));
             recyclerView.SetLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.Vertical, false));
@@ -77,13 +76,6 @@ namespace PicSayAndPlay.Droid
             dialog.SetCancelable(false);
             dialog.SetMessage("Analizando imagen");
             dialog.Show();
-        }
-
-        private async Task GetWordsToShow()
-        {
-            byte[] resizedImageArray = ResizeImage(imageUri);
-            result = await ComputerVisionService.Client.GetTagsAsync(new MemoryStream(resizedImageArray));
-            translations = await TranslationService.TranslateAsync(result);
         }
 
         protected override void OnActivityResult(int requestCode, [GeneratedEnum] Result resultCode, Intent data)
@@ -119,18 +111,6 @@ namespace PicSayAndPlay.Droid
                         }
                     }
                     break;
-            }
-        }
-
-        private byte[] ResizeImage(Uri imageUri)
-        {
-            bitmap = Helpers.BitmapHelper.GetAndRotateBitmap(imageUri.Path);
-            bitmap = Bitmap.CreateScaledBitmap(bitmap, 2000, (int)2000 * bitmap.Height / bitmap.Width, false);
-            using (MemoryStream stream = new MemoryStream())
-            {
-                bitmap.Compress(Bitmap.CompressFormat.Jpeg, 90, stream);
-                stream.Seek(0, SeekOrigin.Begin);
-                return stream.ToArray();
             }
         }
     }

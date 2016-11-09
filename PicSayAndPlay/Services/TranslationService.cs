@@ -48,7 +48,7 @@ namespace PicSayAndPlay.Services
                 }
             }
             catch (Exception)
-            {   }
+            { }
 
             return translations;
         }

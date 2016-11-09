@@ -1,16 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
 using Android.App;
 using Android.Content;
 using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
-using Android.Support.V7.App;
 using Android.Support.Design.Widget;
+using Android.Support.V7.App;
+using Android.Widget;
+using PicSayAndPlay.Droid.Helpers;
+using PicSayAndPlay.ViewModels;
+using System;
 
 namespace PicSayAndPlay.Droid
 {
@@ -23,6 +19,7 @@ namespace PicSayAndPlay.Droid
         private EditText passwordTxt;
         private TextInputLayout userLayout;
         private TextInputLayout passLayout;
+        private LoginViewModel vm;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -36,19 +33,17 @@ namespace PicSayAndPlay.Droid
             passwordTxt = FindViewById<EditText>(Resource.Id.PasswordTxt);
             passLayout = FindViewById<TextInputLayout>(Resource.Id.PasswordTxtLayout);
 
+            vm = new LoginViewModel();
             loginBtn.Click += LoginBtn_Click;
-            registerBtn.Click += RegisterBtn_Click;
-        }
-
-        private void RegisterBtn_Click(object sender, EventArgs e)
-        {
-            Intent i = new Intent(this, typeof(RegisterActivity));
-            StartActivity(i);
+            registerBtn.Click += delegate { StartActivity(typeof(RegisterActivity)); };
         }
 
         private void LoginBtn_Click(object sender, EventArgs e)
         {
-            if (!AreValidInputs())
+            var areValidInputs = vm.CheckInputs(usernameTxt.Text, passwordTxt.Text);
+            ShowErrors(areValidInputs);
+
+            if (areValidInputs != Validation.Correct)
                 return;
 
             /* TODO: Check login */
@@ -57,37 +52,30 @@ namespace PicSayAndPlay.Droid
             StartActivity(i);
         }
 
-        private bool AreValidInputs()
+        private void ShowErrors(Validation response)
         {
-            var valid = true;
-            string userError = null;
-
-            if (String.IsNullOrEmpty(usernameTxt.Text))
+            switch (response)
             {
-                valid = false;
-                userError = "Debes llenar el campo";
+                case Validation.UsernameEmpty:
+                    Util.ShowError(userLayout, "Debes ingresar tu nombre de usuario");
+                    Util.ShowError(passLayout, "");
+                    break;
+
+                case Validation.PasswordEmpty:
+                    Util.ShowError(userLayout, "");
+                    Util.ShowError(passLayout, "Debes ingresar tu contraseña");
+                    break;
+
+                case Validation.AllEmpty:
+                    Util.ShowError(userLayout, "Debes llenar este campo");
+                    Util.ShowError(passLayout, "Debes llenar este campo");
+                    break;
+
+                default:
+                    Util.ShowError(userLayout, "");
+                    Util.ShowError(passLayout, "");
+                    break;
             }
-            ShowError(userLayout, userError);
-
-            string passError = null;
-            if (String.IsNullOrEmpty(passwordTxt.Text))
-            {
-                valid = false;
-                passError = "Debes llenar el campo";
-            }
-            ShowError(passLayout, passError);
-
-            return valid;
-        }
-
-        private void ShowError(TextInputLayout inputLayout, string message)
-        {
-            inputLayout.Error = message;
-
-            if (String.IsNullOrEmpty(message))
-                inputLayout.ErrorEnabled = false;
-            else
-                inputLayout.ErrorEnabled = true;
         }
     }
 }

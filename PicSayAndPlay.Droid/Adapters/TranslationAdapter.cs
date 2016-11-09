@@ -1,19 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Android.App;
 using Android.Content;
-using Android.OS;
-using Android.Runtime;
+using Android.Speech;
+using Android.Support.V7.Widget;
 using Android.Views;
 using Android.Widget;
-using Android.Support.V7.Widget;
-using PicSayAndPlay.Models;
-using Plugin.TextToSpeech;
-using Plugin.CurrentActivity;
-using Android.Speech;
 using Java.Util;
+using PicSayAndPlay.Models;
+using Plugin.CurrentActivity;
+using Plugin.TextToSpeech;
+using System;
+using System.Collections.Generic;
 
 namespace PicSayAndPlay.Droid
 {
@@ -21,7 +17,6 @@ namespace PicSayAndPlay.Droid
     {
         public List<Translation> Translations { get; set; }
         public RecyclerView RecyclerView { get; set; }
-        public Activity Activity { get; set; }
         public int SelectedItemPosition { get; set; }
 
         public TranslationAdapter(List<Translation> translations)
@@ -42,12 +37,13 @@ namespace PicSayAndPlay.Droid
         public override void OnBindViewHolder(RecyclerView.ViewHolder holder, int position)
         {
             var vh = (TranslationViewHolder)holder;
+            var translation = Translations[position];
 
             //  Fill up item info from list
-            vh.OriginalTvw.Text = Translations[position].OriginalWord;
-            vh.TranslatedTvw.Text = Translations[position].TranslatedWord;
-            vh.RecordButton.Click += (s, e) => { CrossTextToSpeech.Current.Speak(vh.OriginalTvw.Text); };
-            if(!vh.SpeakButton.HasOnClickListeners) //  To prevent multiple events
+            vh.OriginalTvw.Text = translation.OriginalWord;
+            vh.TranslatedTvw.Text = translation.TranslatedWord;
+            vh.RecordButton.Click += (s, e) => { CrossTextToSpeech.Current.Speak(translation.OriginalWord); };
+            if (!vh.SpeakButton.HasOnClickListeners) //  To prevent multiple events
                 vh.SpeakButton.Click += SpeakButton_Click;
         }
 
@@ -59,8 +55,7 @@ namespace PicSayAndPlay.Droid
             i.PutExtra(RecognizerIntent.ExtraLanguage, Locale.English);
             i.PutExtra(RecognizerIntent.ExtraPrompt, "Say it!");
             var view = (View)sender;
-            var id = RecyclerView.GetChildLayoutPosition((View)view.Parent.Parent);
-            SelectedItemPosition = id;
+            SelectedItemPosition = RecyclerView.GetChildLayoutPosition((View)view.Parent.Parent);
             try
             {
                 CrossCurrentActivity.Current.Activity.StartActivityForResult(i, 100);
@@ -77,6 +72,5 @@ namespace PicSayAndPlay.Droid
                 .Inflate(Resource.Layout.AdapterTranslatedWord, parent, false);
             return new TranslationViewHolder(layout);
         }
-
     }
 }

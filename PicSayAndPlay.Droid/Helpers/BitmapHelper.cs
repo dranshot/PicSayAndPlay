@@ -1,13 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Android.App;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
 using Android.Graphics;
 using Android.Media;
 
@@ -39,15 +29,19 @@ namespace PicSayAndPlay.Droid.Helpers
                         case Orientation.Rotate90:
                             mtx.PreRotate(90);
                             break;
+
                         case Orientation.Rotate180:
                             mtx.PreRotate(180);
                             break;
+
                         case Orientation.Rotate270:
                             mtx.PreRotate(270);
                             break;
+
                         case Orientation.Normal:
                             // Normal, do nothing
                             break;
+
                         default:
                             break;
                     }
