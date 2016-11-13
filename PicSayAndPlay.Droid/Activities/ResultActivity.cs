@@ -24,11 +24,10 @@ namespace PicSayAndPlay.Droid
         private ProgressDialog dialog;
         private ImageView imageView;
         private Uri imageUri;
-        private RecyclerView recyclerView;
         private List<Translation> translations;
         private Bitmap bitmap;
         private ResultViewModel vm;
-
+        private ListView resultsListView;
         protected async override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -38,8 +37,7 @@ namespace PicSayAndPlay.Droid
             imageUri = Uri.Parse(Intent.GetStringExtra("Image"));
 
             imageView = FindViewById<ImageView>(Resource.Id.AnalyzedImage);
-            recyclerView = FindViewById<RecyclerView>(Resource.Id.recyclerView);
-
+            resultsListView = FindViewById<ListView>(Resource.Id.listView);
             vm = new ResultViewModel();
             
             try
@@ -66,9 +64,17 @@ namespace PicSayAndPlay.Droid
             }
 
             //  Set results
+            ShowPicture();
+
+            resultsListView.Adapter = new Adapters.TranslationAdapter(translations);
+        }
+
+        private void ShowPicture()
+        {
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.InSampleSize = 8;
+            Bitmap bitmap = BitmapFactory.DecodeFile(imageUri.Path, options);
             imageView.SetImageBitmap(bitmap);
-            recyclerView.SetAdapter(new TranslationAdapter(translations));
-            recyclerView.SetLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.Vertical, false));
         }
 
         private void ShowDialog()
@@ -90,10 +96,10 @@ namespace PicSayAndPlay.Droid
                         if (resultCode == Result.Ok && data != null)
                         {
                             var result = data.GetStringArrayListExtra(RecognizerIntent.ExtraResults);
-                            var position = ((TranslationAdapter)recyclerView.GetAdapter()).SelectedItemPosition;
+                            var selectedItem = ((Adapters.TranslationAdapter)resultsListView.Adapter).SelectedItem;
 
                             /* TODO: Delegate this to TranslationManager */
-                            if (translations[position].OriginalWord.ToLower().Equals(result[0].ToLower()))
+                            if (selectedItem.OriginalWord.ToLower().Equals(result[0].ToLower()))
                             {
                                 Toast.MakeText(
                                     this.ApplicationContext,

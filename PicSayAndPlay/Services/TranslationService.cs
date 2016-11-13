@@ -44,7 +44,7 @@ namespace PicSayAndPlay.Services
                 //  Fill Translation object's list
                 for (int i = 0; i < originalWords.Count; i++)
                 {
-                    translations.Add(new Translation(originalWords[i], translatedWords[i], DateTime.Now));
+                    translations.Add(new Translation(originalWords[i], translatedWords[i].Trim(), DateTime.Now));
                 }
             }
             catch (Exception)
