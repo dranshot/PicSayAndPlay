@@ -95,11 +95,11 @@ namespace PicSayAndPlay.Droid
                     {
                         if (resultCode == Result.Ok && data != null)
                         {
-                            var result = data.GetStringArrayListExtra(RecognizerIntent.ExtraResults);
+                            var userInput = data.GetStringArrayListExtra(RecognizerIntent.ExtraResults)[0];
                             var selectedItem = ((Adapters.TranslationAdapter)resultsListView.Adapter).SelectedItem;
 
                             /* TODO: Delegate this to TranslationManager */
-                            if (selectedItem.OriginalWord.ToLower().Equals(result[0].ToLower()))
+                            if (selectedItem.OriginalWord.ToLower().Equals(userInput.ToLower()))
                             {
                                 Toast.MakeText(
                                     this.ApplicationContext,
@@ -110,7 +110,7 @@ namespace PicSayAndPlay.Droid
                             {
                                 Toast.MakeText(
                                     this.ApplicationContext,
-                                    $"Incorrecto :(. Pronunciaste {result[0]}",
+                                    $"Incorrecto :(. Pronunciaste {userInput}",
                                     ToastLength.Long).Show();
                             }
 
