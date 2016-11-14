@@ -14,6 +14,9 @@ namespace PicSayAndPlay.Service.Controllers
             var query = db.SP_Login(username, password);
             var result = query.FirstOrDefault();
 
+            if (result == null)
+                return null;
+
             var user = new Models.User()
             {
                 Birthday = result.Birthday.HasValue ? result.Birthday.Value : new DateTime(),

@@ -335,6 +335,8 @@
     <Content Include="ModelObjects.edmx.diagram">
       <DependentUpon>ModelObjects.edmx</DependentUpon>
     </Content>
+    <None Include="Properties\PublishProfiles\PicSayAndPlayAPIService - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\PicSayAndPlayService - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

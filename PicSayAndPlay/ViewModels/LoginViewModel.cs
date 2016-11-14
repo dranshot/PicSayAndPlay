@@ -2,12 +2,6 @@
 
 namespace PicSayAndPlay.ViewModels
 {
-    public enum LoginResult
-    {
-        Correct,
-        Incorrect
-    }
-
     public enum Validation
     {
         Correct,

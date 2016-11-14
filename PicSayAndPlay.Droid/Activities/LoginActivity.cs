@@ -38,8 +38,10 @@ namespace PicSayAndPlay.Droid
             registerBtn.Click += delegate { StartActivity(typeof(RegisterActivity)); };
         }
 
-        private void LoginBtn_Click(object sender, EventArgs e)
+        private async void LoginBtn_Click(object sender, EventArgs e)
         {
+            loginBtn.Enabled = registerBtn.Enabled = false;
+
             var areValidInputs = vm.CheckInputs(usernameTxt.Text, passwordTxt.Text);
             ShowErrors(areValidInputs);
 
@@ -47,6 +49,14 @@ namespace PicSayAndPlay.Droid
                 return;
 
             /* TODO: Check login */
+            var userFound = await Services.PicSayAndPlayService.LoginUser(usernameTxt.Text, passwordTxt.Text);
+            if (userFound == null)
+            {
+                Toast.MakeText(this.ApplicationContext, "Incorrecto", ToastLength.Short).Show();
+                return;
+            }
+
+            loginBtn.Enabled = registerBtn.Enabled = true;
 
             Intent i = new Intent(this, typeof(MainActivity));
             StartActivity(i);
