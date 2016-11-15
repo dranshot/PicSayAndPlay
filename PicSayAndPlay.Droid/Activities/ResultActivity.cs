@@ -28,6 +28,7 @@ namespace PicSayAndPlay.Droid
         private Bitmap bitmap;
         private ResultViewModel vm;
         private ListView resultsListView;
+
         protected async override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);

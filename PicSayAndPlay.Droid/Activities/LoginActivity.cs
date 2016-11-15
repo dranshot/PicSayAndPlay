@@ -46,13 +46,18 @@ namespace PicSayAndPlay.Droid
             ShowErrors(areValidInputs);
 
             if (areValidInputs != Validation.Correct)
+            {
+                loginBtn.Enabled = registerBtn.Enabled = true;
                 return;
+            }
 
-            /* TODO: Check login */
             var userFound = await Services.PicSayAndPlayService.LoginUser(usernameTxt.Text, passwordTxt.Text);
             if (userFound == null)
             {
                 Toast.MakeText(this.ApplicationContext, "Incorrecto", ToastLength.Short).Show();
+                loginBtn.Enabled = registerBtn.Enabled = true;
+                CleanInputs();
+                loginBtn.RequestFocus();
                 return;
             }
 
@@ -60,6 +65,14 @@ namespace PicSayAndPlay.Droid
 
             Intent i = new Intent(this, typeof(MainActivity));
             StartActivity(i);
+        }
+
+        private void CleanInputs()
+        {
+            usernameTxt.Text = "";
+            passwordTxt.Text = "";
+            usernameTxt.ClearFocus();
+            passwordTxt.ClearFocus();
         }
 
         private void ShowErrors(Validation response)
