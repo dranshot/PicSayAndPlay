@@ -38,6 +38,7 @@ namespace PicSayAndPlay.Service.Models
         public string NickName { get; set; }
         public string Email { get; set; }
         public DateTime Birthday { get; set; }
+        public DateTime RegistrationDate { get; set; }
         public string Level { get; set; }
         public string Country { get; set; }
         public int TotalPoints { get; set; }

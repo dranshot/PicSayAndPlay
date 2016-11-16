@@ -27,7 +27,8 @@ namespace PicSayAndPlay.Service.Controllers
                 NickName = result.NickName,
                 Country = result.Country,
                 Level = result.Level,
-                TotalPoints = result.TotalPoints
+                TotalPoints = result.TotalPoints,
+                RegistrationDate = result.RegistrationDate
             };
             return user;
         }
