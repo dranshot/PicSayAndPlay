@@ -54,7 +54,7 @@ namespace PicSayAndPlay.Droid
             var userFound = await Services.PicSayAndPlayService.LoginUser(usernameTxt.Text, passwordTxt.Text);
             if (userFound == null)
             {
-                Toast.MakeText(this.ApplicationContext, "Incorrecto", ToastLength.Short).Show();
+                Snackbar.Make(sender as Android.Views.View, "Datos incorrectos :(", Snackbar.LengthShort).Show();
                 loginBtn.Enabled = registerBtn.Enabled = true;
                 CleanInputs();
                 loginBtn.RequestFocus();
