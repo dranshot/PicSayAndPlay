@@ -13,14 +13,16 @@ namespace PicSayAndPlay.Service
     
     public partial class SP_Login_Result
     {
+        public int IDUser { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string NickName { get; set; }
         public string Email { get; set; }
-        public Nullable<System.DateTime> Birthday { get; set; }
+        public System.DateTime Birthday { get; set; }
         public System.DateTime RegistrationDate { get; set; }
+        public string Password { get; set; }
         public string Level { get; set; }
         public string Country { get; set; }
-        public int UserId { get; set; }
+        public int TotalPoints { get; set; }
     }
 }

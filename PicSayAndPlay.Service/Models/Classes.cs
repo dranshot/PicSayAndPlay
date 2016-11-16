@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace PicSayAndPlay.Service.Models
 {
@@ -21,7 +22,7 @@ namespace PicSayAndPlay.Service.Models
 
     public class Query
     {
-        public User User { get; set; }
+        public UserToRegister User { get; set; }
         public DateTime Date { get; set; }
         public string OriginalWord { get; set; }
         public string TranslatedWord { get; set; }
@@ -29,16 +30,28 @@ namespace PicSayAndPlay.Service.Models
         public Puntuation Puntuation { get; set; }
     }
 
-    public class User
+    public class UserInformation
     {
         public int ID { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string NickName { get; set; }
         public string Email { get; set; }
+        public DateTime Birthday { get; set; }
+        public string Level { get; set; }
+        public string Country { get; set; }
+        public int TotalPoints { get; set; }
+        public List<Query> Queries { get; set; }
+    }
+
+    public class UserToRegister
+    {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string NickName { get; set; }
+        public string Email { get; set; }
         public string Password { get; set; }
         public DateTime Birthday { get; set; }
-        public Level Level { get; set; }
-        public Country Country { get; set; }
+        public string Country { get; set; }
     }
 }

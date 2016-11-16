@@ -14,15 +14,14 @@ namespace PicSayAndPlay.Service
     
     public partial class Query
     {
-        public int QueryId { get; set; }
-        public int UserId { get; set; }
+        public int IDQuery { get; set; }
+        public int IDUserInfo { get; set; }
         public Nullable<System.DateTime> Date { get; set; }
-        public string OriginalWord { get; set; }
-        public string TranslatedWord { get; set; }
+        public string OriginalWorld { get; set; }
+        public string TranslatedWorld { get; set; }
         public string ImageUrl { get; set; }
-        public int PuntuationId { get; set; }
+        public int Puntuation { get; set; }
     
-        public virtual Puntuation Puntuation { get; set; }
         public virtual UserInfo UserInfo { get; set; }
     }
 }

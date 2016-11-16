@@ -20,16 +20,17 @@ namespace PicSayAndPlay.Service
             this.Queries = new HashSet<Query>();
         }
     
-        public int UserId { get; set; }
+        public int IDUserInfo { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string NickName { get; set; }
         public string Email { get; set; }
-        public string PasswordHash { get; set; }
-        public Nullable<System.DateTime> Birthday { get; set; }
+        public string Password { get; set; }
+        public System.DateTime Birthday { get; set; }
         public System.DateTime RegistrationDate { get; set; }
-        public Nullable<int> CountryID { get; set; }
-        public int LevelId { get; set; }
+        public int IDCountry { get; set; }
+        public int IDLevel { get; set; }
+        public int TotalPoints { get; set; }
     
         public virtual Country Country { get; set; }
         public virtual Level Level { get; set; }

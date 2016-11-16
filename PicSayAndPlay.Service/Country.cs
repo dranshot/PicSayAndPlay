@@ -20,7 +20,7 @@ namespace PicSayAndPlay.Service
             this.UserInfoes = new HashSet<UserInfo>();
         }
     
-        public int CountryId { get; set; }
+        public int IDCountry { get; set; }
         public string Name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -14,10 +14,17 @@ namespace PicSayAndPlay.Service
     
     public partial class Level
     {
-        public int LevelId { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Level()
+        {
+            this.UserInfoes = new HashSet<UserInfo>();
+        }
+    
+        public int IDLevel { get; set; }
         public string Value { get; set; }
         public int PointsRequired { get; set; }
     
-        public virtual UserInfo UserInfo { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UserInfo> UserInfoes { get; set; }
     }
 }

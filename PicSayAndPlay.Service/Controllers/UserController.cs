@@ -9,7 +9,7 @@ namespace PicSayAndPlay.Service.Controllers
         private picsayplaydbEntities db = new picsayplaydbEntities();
 
         [HttpGet]
-        public Models.User GetLogin(string username, string password)
+        public Models.UserInformation GetLogin(string username, string password)
         {
             var query = db.SP_Login(username, password);
             var result = query.FirstOrDefault();
@@ -17,18 +17,26 @@ namespace PicSayAndPlay.Service.Controllers
             if (result == null)
                 return null;
 
-            var user = new Models.User()
+            var user = new Models.UserInformation()
             {
-                Birthday = result.Birthday.HasValue ? result.Birthday.Value : new DateTime(),
+                Birthday = result.Birthday,
                 Email = result.Email,
                 FirstName = result.FirstName,
                 LastName = result.LastName,
-                ID = result.UserId,
+                ID = result.IDUser,
                 NickName = result.NickName,
-                Country = new Models.Country() { Name = result.Country },
-                Level = new Models.Level() { Value = result.Level }
+                Country = result.Country,
+                Level = result.Level,
+                TotalPoints = result.TotalPoints
             };
             return user;
+        }
+
+        [HttpPost]
+        public bool RegisterUser(Models.UserToRegister user)
+        {
+            var query = db.SP_RegisterUser(user.FirstName, user.LastName, user.NickName, user.Email, user.Password, user.Birthday.Date, user.Country);
+            return true;
         }
     }
 }
