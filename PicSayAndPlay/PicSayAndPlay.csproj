@@ -37,7 +37,6 @@
     <!-- A reference to the entire .NET Framework is automatically included -->
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\Classification.cs" />
     <Compile Include="Models\Country.cs" />
     <Compile Include="Models\Translation.cs" />
     <Compile Include="Helpers\TranslationManager.cs" />
@@ -50,6 +49,7 @@
     <Compile Include="Services\TranslationService.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\RegisterViewModel.cs" />
     <Compile Include="ViewModels\ResultViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

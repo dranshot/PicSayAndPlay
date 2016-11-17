@@ -58,14 +58,41 @@
             android:hint="Email"
             android:id="@+id/emailRegisterTxt" />
     </android.support.design.widget.TextInputLayout>
-  
-<!-- Date picker -->
-    <Button
-        android:text="Fecha de nacimiento"
+<!-- Password -->
+    <android.support.design.widget.TextInputLayout
+        android:minWidth="25px"
+        android:minHeight="25px"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/datepickerBtn" />
-  
+        android:id="@+id/passwordRegisterLay">
+        <EditText
+            android:inputType="textPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Contraseña"
+            android:id="@+id/passwordRegisterTxt" />
+    </android.support.design.widget.TextInputLayout>
+<!-- Country picker -->
+    <Spinner
+        android:spinnerMode="dialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/countrySpinner" />
+<!-- Date picker -->
+  <android.support.design.widget.TextInputLayout
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/datePickerLay">
+        <EditText
+            android:focusable="false"
+            android:clickable="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Fecha de nacimiento"
+            android:id="@+id/datePickerTxt" />
+    </android.support.design.widget.TextInputLayout>
 <!-- Send info -->
     <Button
         android:text="Registrarse"

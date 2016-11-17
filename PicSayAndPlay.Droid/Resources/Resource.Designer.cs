@@ -1896,8 +1896,8 @@ namespace PicSayAndPlay.Droid
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f06009b
-			public const int AnalyzedImage = 2131099803;
+			// aapt resource value: 0x7f06009f
+			public const int AnalyzedImage = 2131099807;
 			
 			// aapt resource value: 0x7f06007c
 			public const int LoginBtn = 2131099772;
@@ -2013,14 +2013,20 @@ namespace PicSayAndPlay.Droid
 			// aapt resource value: 0x7f06004a
 			public const int contentPanel = 2131099722;
 			
+			// aapt resource value: 0x7f06009b
+			public const int countrySpinner = 2131099803;
+			
 			// aapt resource value: 0x7f060050
 			public const int custom = 2131099728;
 			
 			// aapt resource value: 0x7f06004f
 			public const int customPanel = 2131099727;
 			
-			// aapt resource value: 0x7f060099
-			public const int datepickerBtn = 2131099801;
+			// aapt resource value: 0x7f06009c
+			public const int datePickerLay = 2131099804;
+			
+			// aapt resource value: 0x7f06009d
+			public const int datePickerTxt = 2131099805;
 			
 			// aapt resource value: 0x7f060058
 			public const int decor_content_parent = 2131099736;
@@ -2139,8 +2145,8 @@ namespace PicSayAndPlay.Droid
 			// aapt resource value: 0x7f06000b
 			public const int listMode = 2131099659;
 			
-			// aapt resource value: 0x7f06009c
-			public const int listView = 2131099804;
+			// aapt resource value: 0x7f0600a0
+			public const int listView = 2131099808;
 			
 			// aapt resource value: 0x7f060041
 			public const int list_item = 2131099713;
@@ -2157,17 +2163,17 @@ namespace PicSayAndPlay.Droid
 			// aapt resource value: 0x7f060016
 			public const int multiply = 2131099670;
 			
-			// aapt resource value: 0x7f0600a0
-			public const int nav_discussion = 2131099808;
+			// aapt resource value: 0x7f0600a4
+			public const int nav_discussion = 2131099812;
 			
-			// aapt resource value: 0x7f06009f
-			public const int nav_friends = 2131099807;
+			// aapt resource value: 0x7f0600a3
+			public const int nav_friends = 2131099811;
 			
-			// aapt resource value: 0x7f06009d
-			public const int nav_home = 2131099805;
+			// aapt resource value: 0x7f0600a1
+			public const int nav_home = 2131099809;
 			
-			// aapt resource value: 0x7f06009e
-			public const int nav_messages = 2131099806;
+			// aapt resource value: 0x7f0600a2
+			public const int nav_messages = 2131099810;
 			
 			// aapt resource value: 0x7f060083
 			public const int nav_view = 2131099779;
@@ -2198,6 +2204,12 @@ namespace PicSayAndPlay.Droid
 			
 			// aapt resource value: 0x7f060046
 			public const int parentPanel = 2131099718;
+			
+			// aapt resource value: 0x7f060099
+			public const int passwordRegisterLay = 2131099801;
+			
+			// aapt resource value: 0x7f06009a
+			public const int passwordRegisterTxt = 2131099802;
 			
 			// aapt resource value: 0x7f060082
 			public const int pickPic = 2131099778;
@@ -2271,8 +2283,8 @@ namespace PicSayAndPlay.Droid
 			// aapt resource value: 0x7f060068
 			public const int select_dialog_listview = 2131099752;
 			
-			// aapt resource value: 0x7f06009a
-			public const int sendRegisterBtn = 2131099802;
+			// aapt resource value: 0x7f06009e
+			public const int sendRegisterBtn = 2131099806;
 			
 			// aapt resource value: 0x7f060053
 			public const int shortcut = 2131099731;
