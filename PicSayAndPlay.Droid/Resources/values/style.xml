@@ -36,4 +36,8 @@
     <item name="android:textColorHighlight">#3949AB</item>
     <item name="android:textColorLink">#3949AB</item>
   </style>
+
+  <style name="ColorPrimaryButtonStyle" parent="Base.Widget.AppCompat.Button">
+    <item name="colorButtonNormal">?attr/colorPrimary</item>
+  </style>
 </resources>

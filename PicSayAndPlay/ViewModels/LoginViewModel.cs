@@ -12,7 +12,7 @@ namespace PicSayAndPlay.ViewModels
 
     public class LoginViewModel
     {
-        public Validation CheckInputs(string username, string password)
+        public static Validation CheckInputs(string username, string password)
         {
             var userValid = !String.IsNullOrEmpty(username);
             var passValid = !String.IsNullOrEmpty(password);

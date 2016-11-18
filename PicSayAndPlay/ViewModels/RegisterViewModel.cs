@@ -9,23 +9,14 @@ namespace PicSayAndPlay.ViewModels
 {
     public class RegisterViewModel
     {
-        public static List<RegisterValidation> CheckInputs(UserToRegister user)
+        public static List<KeyValuePair<RegisterField, string>> CheckInputs(UserToRegister user)
         {
-            var list = new List<RegisterValidation>();
-            if (String.IsNullOrEmpty(user.FirstName))
-                list.Add(new RegisterValidation() { Type = RegisterField.FirstName, ErrorMessage = "Ingresa tu nombre" });
-            if (String.IsNullOrEmpty(user.LastName))
-                list.Add(new RegisterValidation() { Type = RegisterField.LastName, ErrorMessage = "Ingresa tu apellido" });
-            if (String.IsNullOrEmpty(user.NickName))
-                list.Add(new RegisterValidation() { Type = RegisterField.NickName, ErrorMessage = "Ingresa un nombre de usuario" });
-            if (String.IsNullOrEmpty(user.Email))
-                list.Add(new RegisterValidation() { Type = RegisterField.Email, ErrorMessage = "Ingresa un email" });
-            if (String.IsNullOrEmpty(user.Password))
-                list.Add(new RegisterValidation() { Type = RegisterField.Password, ErrorMessage = "Ingresa una contraseña" });
-            if (String.IsNullOrEmpty(user.Country))
-                list.Add(new RegisterValidation() { Type = RegisterField.Country, ErrorMessage = "Selecciona un país" });
-            if (user.Birthday == null)
-                list.Add(new RegisterValidation() { Type = RegisterField.Birthday, ErrorMessage = "Ingresa una fecha válida" });
+            var list = new List<KeyValuePair<RegisterField, string>>();
+            list.Add(new KeyValuePair<RegisterField, string>(RegisterField.FirstName, user.FirstName == "" ? "Campo vacío" : ""));
+            list.Add(new KeyValuePair<RegisterField, string>(RegisterField.LastName, user.LastName == "" ? "Campo vacío" : ""));
+            list.Add(new KeyValuePair<RegisterField, string>(RegisterField.NickName, user.NickName == "" ? "Campo vacío" : ""));
+            list.Add(new KeyValuePair<RegisterField, string>(RegisterField.Password, user.Password == "" ? "Campo vacío" : ""));
+
             return list;
         }
     }

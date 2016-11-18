@@ -19,7 +19,6 @@ namespace PicSayAndPlay.Droid
         private EditText passwordTxt;
         private TextInputLayout userLayout;
         private TextInputLayout passLayout;
-        private LoginViewModel vm;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -33,7 +32,6 @@ namespace PicSayAndPlay.Droid
             passwordTxt = FindViewById<EditText>(Resource.Id.PasswordTxt);
             passLayout = FindViewById<TextInputLayout>(Resource.Id.PasswordTxtLayout);
 
-            vm = new LoginViewModel();
             loginBtn.Click += LoginBtn_Click;
             registerBtn.Click += delegate { StartActivity(typeof(RegisterActivity)); };
         }
@@ -42,7 +40,7 @@ namespace PicSayAndPlay.Droid
         {
             loginBtn.Enabled = registerBtn.Enabled = false;
 
-            var areValidInputs = vm.CheckInputs(usernameTxt.Text, passwordTxt.Text);
+            var areValidInputs = LoginViewModel.CheckInputs(usernameTxt.Text, passwordTxt.Text);
             ShowErrors(areValidInputs);
 
             if (areValidInputs != Validation.Correct)
