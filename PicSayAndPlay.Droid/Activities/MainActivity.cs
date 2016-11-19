@@ -16,7 +16,7 @@ using Android.Support.Design.Widget;
 namespace PicSayAndPlay.Droid
 {
     [Activity(Label = "Pic, Say and Play", MainLauncher = false,
-        Icon = "@drawable/icon", Theme = "@style/Base.Theme.Design")]
+        Icon = "@drawable/icon", Theme = "@style/Base.Theme.Design.Main")]
     public class MainActivity : AppCompatActivity
     {
         private DrawerLayout drawer;

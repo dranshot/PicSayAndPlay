@@ -52,6 +52,10 @@ namespace PicSayAndPlay.Droid
                     stream.Seek(0, SeekOrigin.Begin);
                     translations = await vm.GetWordsToShow(stream);
                 }
+                //  Set results
+                ShowPicture();
+
+                resultsListView.Adapter = new Adapters.TranslationAdapter(translations);
             }
             catch (Exception e)
             {
@@ -63,11 +67,6 @@ namespace PicSayAndPlay.Droid
             {
                 dialog.Dismiss();
             }
-
-            //  Set results
-            ShowPicture();
-
-            resultsListView.Adapter = new Adapters.TranslationAdapter(translations);
         }
 
         private void ShowPicture()

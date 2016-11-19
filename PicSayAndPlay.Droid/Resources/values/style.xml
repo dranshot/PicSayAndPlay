@@ -5,9 +5,9 @@
   <style name="Theme.Design.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
   <style name="Base.Theme.Design" parent="Theme.AppCompat.Light.NoActionBar">
-    <item name="colorPrimary">#9C27B0</item>
-    <item name="colorPrimaryDark">#7B1FA2</item>
-    <item name="colorAccent">#03A9F4</item>
+    <item name="colorPrimary">#009688</item>
+    <item name="colorPrimaryDark">#004D40</item>
+    <item name="colorAccent">#00BFA5</item>
     <item name="android:windowLightStatusBar">true</item>
     <item name="android:windowTranslucentStatus">true</item>
     <item name="windowActionBar">false</item>
@@ -17,8 +17,16 @@
     <item name="android:windowBackground">@drawable/screen</item>
   </style>
 
+  <style name="Base.Theme.Design.Main" parent="Base.Theme.Design">
+    <item name="android:windowBackground">@drawable/background</item>
+  </style>
+
   <style name="AppButtonStyle" parent="Base.Widget.AppCompat.Button">
     <item name="colorButtonNormal">#303F9F</item>
+  </style>
+
+  <style name="ColorPrimaryButtonStyle" parent="Base.Widget.AppCompat.Button">
+    <item name="colorButtonNormal">?attr/colorPrimary</item>
   </style>
 
   <style name="TextLabel" parent="TextAppearance.AppCompat">
@@ -35,9 +43,5 @@
     <item name="android:textColor">#3949AB</item>
     <item name="android:textColorHighlight">#3949AB</item>
     <item name="android:textColorLink">#3949AB</item>
-  </style>
-
-  <style name="ColorPrimaryButtonStyle" parent="Base.Widget.AppCompat.Button">
-    <item name="colorButtonNormal">?attr/colorPrimary</item>
   </style>
 </resources>
