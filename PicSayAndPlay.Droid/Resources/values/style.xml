@@ -9,6 +9,7 @@
     <item name="colorPrimaryDark">#004D40</item>
     <item name="colorAccent">#00BFA5</item>
     <item name="android:windowLightStatusBar">true</item>
+    <item name="android:statusBarColor">@android:color/transparent</item>
     <item name="android:windowTranslucentStatus">true</item>
     <item name="windowActionBar">false</item>
   </style>
@@ -17,15 +18,23 @@
     <item name="android:windowBackground">@drawable/screen</item>
   </style>
 
+  <style name="Base.Theme.Design.Splash" parent="Base.Theme.Design">
+    <item name="android:windowBackground">@drawable/SplashScreen</item>
+  </style>
+
   <style name="Base.Theme.Design.Main" parent="Base.Theme.Design">
     <item name="android:windowBackground">@drawable/background</item>
   </style>
 
   <style name="AppButtonStyle" parent="Base.Widget.AppCompat.Button">
-    <item name="colorButtonNormal">#303F9F</item>
+    <item name="colorButtonNormal">#00BFA5</item>
   </style>
 
   <style name="ColorPrimaryButtonStyle" parent="Base.Widget.AppCompat.Button">
+    <item name="colorButtonNormal">#34495E</item>
+  </style>
+
+  <style name="ColorPrimaryButton" parent="Base.Widget.AppCompat.Button">
     <item name="colorButtonNormal">?attr/colorPrimary</item>
   </style>
 
@@ -40,8 +49,13 @@
   </style>
 
   <style name="AppTheme.EditTextError" parent="@android:style/TextAppearance">
-    <item name="android:textColor">#3949AB</item>
-    <item name="android:textColorHighlight">#3949AB</item>
-    <item name="android:textColorLink">#3949AB</item>
+    <item name="android:textColor">#FFFFFF</item>
+    <item name="android:textColorHighlight">#FFFFFF</item>
+    <item name="android:textColorLink">#FFFFFF</item>
   </style>
+
+  <style name="AppTheme.ActionBar.Transparent" parent="Theme.AppCompat.Light">
+    <item name="colorPrimary">@android:color/transparent</item>
+  </style>
+  
 </resources>

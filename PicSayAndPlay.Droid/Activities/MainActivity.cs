@@ -34,6 +34,7 @@ namespace PicSayAndPlay.Droid
             SupportActionBar ab = SupportActionBar;
             ab.SetHomeAsUpIndicator(Resource.Drawable.ic_menu);
             ab.SetDisplayHomeAsUpEnabled(true);
+            ab.SetDisplayShowTitleEnabled(false);
 
             drawer = FindViewById<DrawerLayout>(Resource.Id.drawerLayout);
             NavigationView navView = FindViewById<NavigationView>(Resource.Id.nav_view);

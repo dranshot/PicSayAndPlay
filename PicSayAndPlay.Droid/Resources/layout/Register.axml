@@ -83,10 +83,12 @@
     </android.support.design.widget.TextInputLayout>
 <!-- Send info -->
     <Button
+        android:layout_marginTop="10dp"
         android:text="Registrarse"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/sendRegisterBtn"
         android:textColor="#FFFFFF"
-        android:theme="@style/ColorPrimaryButtonStyle" />
+        android:theme="@style/ColorPrimaryButton" />
+  
 </LinearLayout>

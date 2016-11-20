@@ -10,7 +10,7 @@ using System;
 
 namespace PicSayAndPlay.Droid
 {
-    [Activity(Label = "Pic Say & Play", Theme = "@style/Base.Theme.Design.Login", MainLauncher = true)]
+    [Activity(Label = "Pic Say & Play", Theme = "@style/Base.Theme.Design.Login", NoHistory =true)]
     public class LoginActivity : AppCompatActivity
     {
         private Button loginBtn;
