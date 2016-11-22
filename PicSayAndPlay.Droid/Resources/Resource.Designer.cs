@@ -2418,11 +2418,11 @@ namespace PicSayAndPlay.Droid
 			// aapt resource value: 0x7f060014
 			public const int useLogo = 2131099668;
 			
+			// aapt resource value: 0x7f060082
+			public const int usernameTvw = 2131099778;
+			
 			// aapt resource value: 0x7f060081
 			public const int usr_info = 2131099777;
-			
-			// aapt resource value: 0x7f060082
-			public const int usr_txt = 2131099778;
 			
 			// aapt resource value: 0x7f06000a
 			public const int view_offset_helper = 2131099658;

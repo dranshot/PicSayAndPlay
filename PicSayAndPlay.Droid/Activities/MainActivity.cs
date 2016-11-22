@@ -12,22 +12,46 @@ using SupportFragmentManager = Android.Support.V4.App.FragmentManager;
 using SupportToolbar = Android.Support.V7.Widget.Toolbar;
 using SupportActionBar = Android.Support.V7.App.ActionBar;
 using Android.Support.Design.Widget;
+using BlinkXamarinProject.AndroidApp.Helpers;
 
 namespace PicSayAndPlay.Droid
 {
-    [Activity(Label = "Pic, Say and Play", MainLauncher = false,
+    [Activity(Label = "Pic, Say & Play", MainLauncher = false,
         Icon = "@drawable/icon", Theme = "@style/Base.Theme.Design.Main")]
     public class MainActivity : AppCompatActivity
     {
         private DrawerLayout drawer;
         private Button takePhotoBtn;
         private Button pickPhotoBtn;
+        private TextView usernameTvw;
+        private string nickname;
 
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
             SetContentView(Resource.Layout.Main);
 
+            SetUpToolbar();
+
+            drawer = FindViewById<DrawerLayout>(Resource.Id.drawerLayout);
+            takePhotoBtn = FindViewById<Button>(Resource.Id.takePic);
+            pickPhotoBtn = FindViewById<Button>(Resource.Id.pickPic);
+            usernameTvw = FindViewById<TextView>(Resource.Id.usernameTvw);
+            NavigationView navView = FindViewById<NavigationView>(Resource.Id.nav_view);
+
+
+            if (navView != null)
+                SetUpDrawerContent(navView);
+
+            SetUserInfo();
+
+            //  EventHandlers
+            takePhotoBtn.Click += GetPhotoToTranslateAsync;
+            pickPhotoBtn.Click += GetPhotoToTranslateAsync;
+        }
+
+        private void SetUpToolbar()
+        {
             SupportToolbar toolBar = FindViewById<SupportToolbar>(Resource.Id.toolBar);
             SetSupportActionBar(toolBar);
 
@@ -35,18 +59,6 @@ namespace PicSayAndPlay.Droid
             ab.SetHomeAsUpIndicator(Resource.Drawable.ic_menu);
             ab.SetDisplayHomeAsUpEnabled(true);
             ab.SetDisplayShowTitleEnabled(false);
-
-            drawer = FindViewById<DrawerLayout>(Resource.Id.drawerLayout);
-            NavigationView navView = FindViewById<NavigationView>(Resource.Id.nav_view);
-            takePhotoBtn = FindViewById<Button>(Resource.Id.takePic);
-            pickPhotoBtn = FindViewById<Button>(Resource.Id.pickPic);
-
-            if (navView != null)
-                SetUpDrawerContent(navView);
-
-            //  EventHandlers
-            takePhotoBtn.Click += GetPhotoToTranslate;
-            pickPhotoBtn.Click += GetPhotoToTranslate;
         }
 
         private void SetUpDrawerContent(NavigationView navView)
@@ -54,8 +66,28 @@ namespace PicSayAndPlay.Droid
             navView.NavigationItemSelected += (object sender, NavigationView.NavigationItemSelectedEventArgs e) =>
             {
                 e.MenuItem.SetChecked(true);
+
+                switch (e.MenuItem.ItemId)
+                {
+                    case Resource.Id.nav_exit_to_app:
+                        var session = new UserSessionManager(this);
+                        session.LogoutUser();
+                        this.Finish();
+                        break;
+                }
+
                 drawer.CloseDrawers();
             };
+            navView.SetCheckedItem(Resource.Id.nav_home);
+        }
+
+        private void SetUserInfo()
+        {
+            var session = new UserSessionManager(this);
+            var userDetails = session.GetUserDetails();
+
+            userDetails.TryGetValue(UserSessionManager.KEY_NICKNAME, out nickname);
+            usernameTvw.Text = nickname;
         }
 
         public override bool OnOptionsItemSelected(Android.Views.IMenuItem item)
@@ -71,7 +103,7 @@ namespace PicSayAndPlay.Droid
             }
         }
 
-        private async void GetPhotoToTranslate(object sender, EventArgs e)
+        private async void GetPhotoToTranslateAsync(object sender, EventArgs e)
         {
             PictureResult result;
             await CrossMedia.Current.Initialize();

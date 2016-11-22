@@ -156,6 +156,7 @@
     <Compile Include="Activities\SplashActivity.cs" />
     <Compile Include="Adapters\TranslationAdapter.cs" />
     <Compile Include="Helpers\BitmapHelper.cs" />
+    <Compile Include="Helpers\UserSessionManager.cs" />
     <Compile Include="Helpers\Util.cs" />
     <Compile Include="MainApplication.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />

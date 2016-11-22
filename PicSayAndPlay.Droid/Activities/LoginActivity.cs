@@ -4,13 +4,14 @@ using Android.OS;
 using Android.Support.Design.Widget;
 using Android.Support.V7.App;
 using Android.Widget;
+using BlinkXamarinProject.AndroidApp.Helpers;
 using PicSayAndPlay.Droid.Helpers;
 using PicSayAndPlay.ViewModels;
 using System;
 
 namespace PicSayAndPlay.Droid
 {
-    [Activity(Label = "Pic Say & Play", Theme = "@style/Base.Theme.Design.Login", NoHistory =true)]
+    [Activity(Label = "Pic Say & Play", Theme = "@style/Base.Theme.Design.Login")]
     public class LoginActivity : AppCompatActivity
     {
         private Button loginBtn;
@@ -61,8 +62,11 @@ namespace PicSayAndPlay.Droid
 
             loginBtn.Enabled = registerBtn.Enabled = true;
 
+            var session = new UserSessionManager(this);
+            session.CreateUserLoginSession(userFound.NickName, passwordTxt.Text);
             Intent i = new Intent(this, typeof(MainActivity));
             StartActivity(i);
+            this.Finish();
         }
 
         private void CleanInputs()
