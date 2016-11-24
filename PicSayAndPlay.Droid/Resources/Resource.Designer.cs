@@ -81,6 +81,9 @@ namespace PicSayAndPlay.Droid
 			// aapt resource value: 0x7f04000f
 			public const int design_snackbar_out = 2130968591;
 			
+			// aapt resource value: 0x7f040010
+			public const int fade_in = 2130968592;
+			
 			static Animation()
 			{
 				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
@@ -1941,8 +1944,8 @@ namespace PicSayAndPlay.Droid
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f06009e
-			public const int AnalyzedImage = 2131099806;
+			// aapt resource value: 0x7f06009f
+			public const int AnalyzedImage = 2131099807;
 			
 			// aapt resource value: 0x7f06007c
 			public const int LoginBtn = 2131099772;
@@ -2124,11 +2127,11 @@ namespace PicSayAndPlay.Droid
 			// aapt resource value: 0x7f06002e
 			public const int fill_vertical = 2131099694;
 			
-			// aapt resource value: 0x7f060095
-			public const int firstnameRegisterLay = 2131099797;
-			
 			// aapt resource value: 0x7f060096
-			public const int firstnameRegisterTxt = 2131099798;
+			public const int firstnameRegisterLay = 2131099798;
+			
+			// aapt resource value: 0x7f060097
+			public const int firstnameRegisterTxt = 2131099799;
 			
 			// aapt resource value: 0x7f060038
 			public const int @fixed = 2131099704;
@@ -2157,11 +2160,11 @@ namespace PicSayAndPlay.Droid
 			// aapt resource value: 0x7f060000
 			public const int item_touch_helper_previous_elevation = 2131099648;
 			
-			// aapt resource value: 0x7f060097
-			public const int lastnameRegisterLay = 2131099799;
-			
 			// aapt resource value: 0x7f060098
-			public const int lastnameRegisterTxt = 2131099800;
+			public const int lastnameRegisterLay = 2131099800;
+			
+			// aapt resource value: 0x7f060099
+			public const int lastnameRegisterTxt = 2131099801;
 			
 			// aapt resource value: 0x7f06002f
 			public const int left = 2131099695;
@@ -2178,8 +2181,8 @@ namespace PicSayAndPlay.Droid
 			// aapt resource value: 0x7f06000b
 			public const int listMode = 2131099659;
 			
-			// aapt resource value: 0x7f06009f
-			public const int listView = 2131099807;
+			// aapt resource value: 0x7f0600a0
+			public const int listView = 2131099808;
 			
 			// aapt resource value: 0x7f060041
 			public const int list_item = 2131099713;
@@ -2196,20 +2199,20 @@ namespace PicSayAndPlay.Droid
 			// aapt resource value: 0x7f060016
 			public const int multiply = 2131099670;
 			
-			// aapt resource value: 0x7f0600a4
-			public const int nav_exit_to_app = 2131099812;
+			// aapt resource value: 0x7f0600a7
+			public const int nav_exit_to_app = 2131099815;
 			
-			// aapt resource value: 0x7f0600a2
-			public const int nav_history = 2131099810;
-			
-			// aapt resource value: 0x7f0600a0
-			public const int nav_home = 2131099808;
-			
-			// aapt resource value: 0x7f0600a1
-			public const int nav_ranking = 2131099809;
+			// aapt resource value: 0x7f0600a5
+			public const int nav_history = 2131099813;
 			
 			// aapt resource value: 0x7f0600a3
-			public const int nav_settings = 2131099811;
+			public const int nav_home = 2131099811;
+			
+			// aapt resource value: 0x7f0600a4
+			public const int nav_ranking = 2131099812;
+			
+			// aapt resource value: 0x7f0600a6
+			public const int nav_settings = 2131099814;
 			
 			// aapt resource value: 0x7f06007f
 			public const int nav_view = 2131099775;
@@ -2220,11 +2223,11 @@ namespace PicSayAndPlay.Droid
 			// aapt resource value: 0x7f060021
 			public const int never = 2131099681;
 			
-			// aapt resource value: 0x7f060099
-			public const int nicknameRegisterLay = 2131099801;
-			
 			// aapt resource value: 0x7f06009a
-			public const int nicknameRegisterTxt = 2131099802;
+			public const int nicknameRegisterLay = 2131099802;
+			
+			// aapt resource value: 0x7f06009b
+			public const int nicknameRegisterTxt = 2131099803;
 			
 			// aapt resource value: 0x7f060010
 			public const int none = 2131099664;
@@ -2241,11 +2244,11 @@ namespace PicSayAndPlay.Droid
 			// aapt resource value: 0x7f060046
 			public const int parentPanel = 2131099718;
 			
-			// aapt resource value: 0x7f06009b
-			public const int passwordRegisterLay = 2131099803;
-			
 			// aapt resource value: 0x7f06009c
-			public const int passwordRegisterTxt = 2131099804;
+			public const int passwordRegisterLay = 2131099804;
+			
+			// aapt resource value: 0x7f06009d
+			public const int passwordRegisterTxt = 2131099805;
 			
 			// aapt resource value: 0x7f060085
 			public const int pickPic = 2131099781;
@@ -2322,8 +2325,8 @@ namespace PicSayAndPlay.Droid
 			// aapt resource value: 0x7f060068
 			public const int select_dialog_listview = 2131099752;
 			
-			// aapt resource value: 0x7f06009d
-			public const int sendRegisterBtn = 2131099805;
+			// aapt resource value: 0x7f06009e
+			public const int sendRegisterBtn = 2131099806;
 			
 			// aapt resource value: 0x7f060053
 			public const int shortcut = 2131099731;
@@ -2427,8 +2430,17 @@ namespace PicSayAndPlay.Droid
 			// aapt resource value: 0x7f06000a
 			public const int view_offset_helper = 2131099658;
 			
+			// aapt resource value: 0x7f0600a2
+			public const int welcomeContinueBtn = 2131099810;
+			
 			// aapt resource value: 0x7f060077
-			public const int welcomeTxt = 2131099767;
+			public const int welcomeLoginTxt = 2131099767;
+			
+			// aapt resource value: 0x7f0600a1
+			public const int welcomeTvw = 2131099809;
+			
+			// aapt resource value: 0x7f060095
+			public const int welcomeTxt = 2131099797;
 			
 			// aapt resource value: 0x7f060022
 			public const int withText = 2131099682;
@@ -2650,6 +2662,9 @@ namespace PicSayAndPlay.Droid
 			
 			// aapt resource value: 0x7f030037
 			public const int support_simple_spinner_dropdown_item = 2130903095;
+			
+			// aapt resource value: 0x7f030038
+			public const int Welcome = 2130903096;
 			
 			static Layout()
 			{

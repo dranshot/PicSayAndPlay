@@ -154,6 +154,7 @@
     <Compile Include="Activities\RegisterActivity.cs" />
     <Compile Include="Activities\ResultActivity.cs" />
     <Compile Include="Activities\SplashActivity.cs" />
+    <Compile Include="Activities\WelcomeActivity.cs" />
     <Compile Include="Adapters\TranslationAdapter.cs" />
     <Compile Include="Helpers\BitmapHelper.cs" />
     <Compile Include="Helpers\UserSessionManager.cs" />
@@ -183,6 +184,9 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\nav_header.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\Welcome.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
@@ -330,6 +334,9 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\SplashScreen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\anim\fade_in.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />

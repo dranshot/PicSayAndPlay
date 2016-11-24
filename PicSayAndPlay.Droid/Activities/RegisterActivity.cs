@@ -1,4 +1,5 @@
 using Android.App;
+using Android.Content;
 using Android.OS;
 using Android.Support.Design.Widget;
 using Android.Widget;
@@ -51,7 +52,12 @@ namespace PicSayAndPlay.Droid
                     try
                     {
                         await Services.PicSayAndPlayService.RegisterUser(user);
-                        Snackbar.Make(s as Android.Views.View, "Registro completo", Snackbar.LengthLong).Show();
+                        Intent i = new Intent(this, typeof(Activities.WelcomeActivity));
+                        i.AddFlags(ActivityFlags.ClearTop);
+                        i.SetFlags(ActivityFlags.NewTask);
+                        i.PutExtra("userName", $"{user.FirstName.ToUpperInvariant()} {user.LastName.ToUpperInvariant()}");
+                        StartActivity(i);
+                        this.Finish();
                     }
                     catch
                     {
